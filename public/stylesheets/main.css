@@ -1,0 +1,13 @@
+body {
+    background-image: url('../images/Harry.jpg');
+    -webkit-background-size: cover;
+    text-align:center;
+    display: inline;
+}
+h1{
+    font-size:36px;
+    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    position:relative;
+    top:235px;
+    font-weight: 700px;
+}

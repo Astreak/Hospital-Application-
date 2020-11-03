@@ -11,7 +11,7 @@ app.use(session({
     secret: false,
     maxAge: 6000000,
     path: '/',
-    httpOnly: true,
+    httpOnly: false,
     priority: 'Low'
   }
 }))
@@ -42,7 +42,7 @@ var redirectLogin = (req, res, next) => {
 }
 app.get('/', redirectLogin, function (req, res) {
    console.log(req.session.cookie.domain)
-   res.render('index');
+   res.render('layouts/main',{layout:false});
 });
 
 app.get('/login',redirectHome, (req, res) => {
@@ -51,7 +51,7 @@ app.get('/login',redirectHome, (req, res) => {
 app.post('/login_post', (req, res) => {
   req.session.prj = req.body.username
   req.session.chess = req.body.password
-  console.log(req.session.chess)
+  console.log(req.session.prj)
   
  
   res.redirect(303,'/')

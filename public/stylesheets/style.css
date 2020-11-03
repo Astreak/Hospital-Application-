@@ -1,7 +1,9 @@
 
 body{
     text-align:center;
-    display: inline
+    display: inline;
+    background-image: url('../images/LOL.jpg');
+    -webkit-background-size: cover;
 }
 .praj{
     color:black;
