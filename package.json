@@ -1,0 +1,23 @@
+{
+  "name": "medicalserver",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www.ts"
+  },
+  "dependencies": {
+    "@types/node": "^14.14.6",
+    "bootstrap": "^4.5.3",
+    "cookie-parser": "^1.4.5",
+    "debug": "~2.6.9",
+    "express": "^4.17.1",
+    "express-generator": "^4.16.1",
+    "express-session": "^1.17.1",
+    "express3-handlebars": "^0.5.2",
+    "http-errors": "~1.6.3",
+    "jade": "~1.11.0",
+    "morgan": "~1.9.1",
+    "request": "^2.88.2",
+    "ts-node": "^9.0.0"
+  }
+}
