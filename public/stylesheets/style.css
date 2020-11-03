@@ -1,6 +1,7 @@
 
 body{
-    text-align:center
+    text-align:center;
+    display: inline
 }
 .praj{
     color:black;
@@ -12,4 +13,8 @@ body{
     margin: 0 auto;
     width: 80%
        
+}
+.heading{
+    font-weight:300px;
+    font-size:35px;
 }

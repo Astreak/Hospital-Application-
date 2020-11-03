@@ -12,4 +12,11 @@ router.post('/login_post', (req, res) => {
   console.log(req.body.username);
   res.redirect(303, '/');
 })
+router.get('/register', (req, res) => {
+  res.render('register')
+})
+router.post('/register_post', (req, res) => {
+  console.log(req.body.email)
+  res.redirect(303,'/')
+})
 module.exports = router;
