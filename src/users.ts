@@ -1,8 +1,16 @@
 var express = require('express');
 const session = require('express-session');
 const cookie = require('cookie-parser');
-const db = require("./data");
+const mongoose=require('mongoose')
+const db = require("./data.ts");
+const app2 = require('./index.ts')
 var app = express();
+
+var connect=mongoose.connect("mongodb://localhost:27017/Relationals", { useUnifiedTopology: true, useNewUrlParser: true })
+connect .then(() => {
+  console.log('Database Connected')
+})
+
 app.use(session({
   name: 'prj',
   secret: '*****',
@@ -13,7 +21,7 @@ app.use(session({
     maxAge: 6000000,
     path: '/',
     httpOnly: false,
-    priority: 'Low'
+    priority: 'High'
   }
 }))
 app.use(session({
@@ -29,6 +37,8 @@ app.use(session({
     priority:'High'
   }
 }))
+app.use(app2);
+
 var redirectHome = (req, res, next) => {
   if (!req.session.prj)
     next()
@@ -41,21 +51,35 @@ var redirectLogin = (req, res, next) => {
   else
     res.redirect(303,'/login')
 }
+var redirectRegister = (req, res, next) => {
+  
+}
+var redirectionToLogin = (req, res, next) => {
+  
+}
 app.get('/', redirectLogin, function (req, res) {
-   console.log(req.session.cookie.domain)
-   res.render('layouts/main',{layout:false});
+   
+   res.render('layouts/main',{layout:false,user:req.session.prj});
 });
 
 app.get('/login',redirectHome, (req, res) => {
   res.render('login')
 })
-app.post('/login_post', (req, res) => {
-  req.session.prj = req.body.username
-  req.session.chess = req.body.password
-  console.log(req.session.prj)
-  
- 
-  res.redirect(303,'/')
+app.post('/login_post', (req, res,next) => {
+  db.findOne({ 'Name': req.body.username, 'Password': req.body.password })
+    .then((d) => {
+      if (d) {
+        req.session.prj = req.body.username
+        req.session.chess = req.body.password
+        console.log('Here')
+        res.redirect(303, '/')
+        
+      }
+      else {
+            res.redirect(303,'/register')
+      }
+  })
+    
 })
 app.get('/register', (req, res) => {
   console.log(req.session.chess)
@@ -65,8 +89,27 @@ app.get('/register/api', (req, res) => {
   console.log(req.session.chess)
   res.send("<h1> Stuff </h1>")
 })
-app.post('/register_post', (req, res) => {
-  console.log('Data successfully recorded')
+app.post('/register_post', (req, res,next) => {
+  let email = req.body.email
+  db.findOne({ 'Email': email })
+    .then((d) => {
+      if (d != null) {
+        console.log('Grosker')
+        res.redirect("/login", { 'msg': 'You are user Login' })
+        next();
+      }
+      else {
+        return db.create({
+          Name: req.body.username,
+          Email: req.body.email,
+          Password:req.body.password
+        })
+      }
+    }).then((d) => {
+      console.log('User Created');
+    }).catch((err) => {
+      next(err)
+    })
   res.redirect(303,'/')
 })
 app.get('/logout',redirectLogin, (req, res) => {

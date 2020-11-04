@@ -16,6 +16,14 @@
 <body>
     <nav class="navbar navbar-dark bg-dark" style="font-family:Georgia, 'Times New Roman', Times, serif">
         <a href="#" class="navbar-brand">Medical Application</a>
+        {{# if user }}
+            <ul class="navbar-nav ml-auto">
+                <img src='https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTk7DWkLyAejBTw-Ue2ObAq1YvNhywbHBd79g&usqp=CAU' width='25' height='25'><span>
+
+                <p class='logged'>{{user}} <p>
+                </span>
+            </ul>
+        {{/if}}
     </nav>
     <br>
     <br>

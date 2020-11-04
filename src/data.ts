@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-var Schema = new mongoose.Schema;
+var Schema =mongoose.Schema;
 
 var Store = new Schema({
     Name: {
@@ -23,5 +23,5 @@ var Store = new Schema({
         timestamp:true
     })
 
-var Store = mongoose.model('Users', Store)
+var Store = mongoose.model('Chess', Store)
 module.exports = Store;

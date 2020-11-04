@@ -11,3 +11,21 @@ h1{
     top:235px;
     font-weight: 700px;
 }
+.logged{
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 14px;
+    color:azure;
+    position:relative;
+    bottom:13px;
+    right:12px;
+    
+}
+img{
+    position:relative;
+    right:45px;
+    top:16px;
+    border-radius:50px
+}
+.navbar-brand{
+    font-size:16px;
+}
