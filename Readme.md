@@ -3,7 +3,7 @@ Starting off Creating a hospital application managing diffirent servers (medical
 
 ![alt-txt](https://seeklogo.com/images/N/nodejs-logo-FBE122E377-seeklogo.com.png)
 
-# Technologies Used:
+# Technologies and frameworks  Used:
 - Node js
 - Handlebars templating engine
 - express js

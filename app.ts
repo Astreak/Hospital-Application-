@@ -4,8 +4,8 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
-var indexRouter = require('./routes/index.ts');
-var usersRouter = require('./routes/users.ts');
+var indexRouter = require('./src/index.ts');
+var usersRouter = require('./src/users.ts');
 const handlebars = require('express3-handlebars').create({
   defaultLayout: 'layout',
   'helpers': [
