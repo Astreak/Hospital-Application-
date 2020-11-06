@@ -1,15 +1,17 @@
 body {
-    background-image: url('../images/Harry.jpg');
+    background-image: url('../images/Rail.jpg');
     -webkit-background-size: cover;
     text-align:center;
     display: inline;
+    
 }
 h1{
     font-size:36px;
-    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     position:relative;
-    top:235px;
+    top:150px;
     font-weight: 700px;
+    color:Azure
 }
 .logged{
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
@@ -24,8 +26,12 @@ img{
     position:relative;
     right:45px;
     top:16px;
-    border-radius:50px
+    border-radius:50px;
 }
 .navbar-brand{
     font-size:16px;
+}
+.head{
+    color:beige;
+    font-style: italic;
 }

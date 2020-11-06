@@ -1,10 +1,20 @@
 
 body{
+    
     text-align:center;
     display: inline;
     background-image: url('../images/LOL.jpg');
     -webkit-background-size: cover;
 }
+
+.logo {
+        position: relative;
+        left: 47%;
+        top: 16px;
+        border-radius: 50px;
+
+}
+
 .praj{
     color:black;
     font-family:Arial, Helvetica, sans-serif;
@@ -19,4 +29,8 @@ body{
 .heading{
     font-weight:300px;
     font-size:35px;
+}
+.any{
+    position:relative;
+    top:60px;
 }

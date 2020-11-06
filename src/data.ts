@@ -1,6 +1,7 @@
-const mongoose = require('mongoose');
+const  mongoose = require('mongoose');
 
-var Schema =mongoose.Schema;
+var Schema = mongoose.Schema;
+
 
 var Store = new Schema({
     Name: {
@@ -8,6 +9,12 @@ var Store = new Schema({
         require: true,
         unique: false
     },
+    hosstatus: {
+        type: Boolean,
+        require: true,
+        unique:false
+    },
+   
     Email: {
         type: String,
         require: true,
@@ -17,11 +24,26 @@ var Store = new Schema({
         type: String,
         require: true,
         unique: false
+    }, Bank: {
+        Amount: {
+            type: Number,
+            require: true,
+            unique:false
+        },
+        Transaction: {
+            type: [{
+                user: String,
+                credit: Number
+            }],
+            require: false,
+            unique: false
+        }
+        
     }
 },
     {
         timestamp:true
     })
 
-var Store = mongoose.model('Chess', Store)
+var Store = mongoose.model('Hospital', Store)
 module.exports = Store;

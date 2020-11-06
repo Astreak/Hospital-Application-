@@ -9,6 +9,8 @@ var app = express();
 var connect=mongoose.connect("mongodb://localhost:27017/Relationals", { useUnifiedTopology: true, useNewUrlParser: true })
 connect .then(() => {
   console.log('Database Connected')
+}).catch(() => {
+    console.log('Check Database Connection')
 })
 
 app.use(session({
@@ -34,9 +36,9 @@ app.use(session({
     maxAge: 600000,
     path: '/',
     httpOnly: false,
-    priority:'High'
+    priority: 'High'
   }
-}))
+}));
 app.use(app2);
 
 var redirectHome = (req, res, next) => {
@@ -91,18 +93,24 @@ app.get('/register/api', (req, res) => {
 })
 app.post('/register_post', (req, res,next) => {
   let email = req.body.email
+  var temp;
+  if (!req.body.hos)
+    temp = false
+  else
+    temp=true
   db.findOne({ 'Email': email })
     .then((d) => {
       if (d != null) {
-        console.log('Grosker')
-        res.redirect("/login", { 'msg': 'You are user Login' })
-        next();
+        res.redirect("/login")
+        
       }
       else {
         return db.create({
           Name: req.body.username,
+          hosstatus: temp,
           Email: req.body.email,
-          Password:req.body.password
+          Password: req.body.password,
+          Bank:{Amount:req.body.Amount,Transaction:[]}
         })
       }
     }).then((d) => {
