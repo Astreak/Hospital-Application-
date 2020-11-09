@@ -20,7 +20,13 @@
             <ul class="navbar-nav ml-auto">
                 <img src='https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTk7DWkLyAejBTw-Ue2ObAq1YvNhywbHBd79g&usqp=CAU' width='25' height='25'><span>
 
-                <p class='logged'>{{user}} <p>
+                <p class='logged'>
+                {{# if status }}
+                   <span style="color:lime">{{user}}</span>
+                {{ else }}
+                    {{user}}
+                {{/if}} 
+                <p>
                 </span>
             </ul>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">

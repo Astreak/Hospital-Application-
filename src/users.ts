@@ -27,6 +27,19 @@ app.use(session({
   }
 }))
 app.use(session({
+  name: 'status',
+  secret: '*****',
+  saveUnInitialized: false,
+  resave: false,
+  cookie: {
+    secret: false,
+    maxAge: 6000000,
+    path: '/',
+    httpOnly: false,
+    priority: 'High'
+  }
+}))
+app.use(session({
   name: 'chess',
   secret: '*****',
   saveUnInitialized: false,
@@ -61,20 +74,23 @@ var redirectionToLogin = (req, res, next) => {
 }
 app.get('/', redirectLogin, function (req, res) {
    
-   res.render('layouts/main',{layout:false,user:req.session.prj});
+   res.render('layouts/main',{layout:false,user:req.session.prj,status:req.session.status});
 });
 
 app.get('/login',redirectHome, (req, res) => {
   res.render('login')
 })
-app.post('/login_post', (req, res,next) => {
+app.post('/login_post', (req, res, next) => {
+  let temp
   db.findOne({ 'Name': req.body.username, 'Password': req.body.password })
     .then((d) => {
       if (d) {
         req.session.prj = req.body.username
         req.session.chess = req.body.password
         console.log('Here')
+        req.session.status=d.hosstatus
         res.redirect(303, '/')
+
         
       }
       else {
