@@ -14,6 +14,18 @@ app.use(session({
         path: '/'
     }
 }));
+app.use(session({
+    name: 'bank',
+    secret: '****?',
+    saveUnInitialized: false,
+    resave: false,
+    cookie: {
+        secret: false,
+        httpOnly: false,
+        maxAge: 60000000,
+        path: '/'
+    }
+}));
 var Logic = (req, res, next) => {
     req.session.admin = 'paraj'
     next()
@@ -25,4 +37,5 @@ app.get('/admin', (req, res) => {
     else
         res.redirect(303,'/')
 })
+
 module.exports = app;

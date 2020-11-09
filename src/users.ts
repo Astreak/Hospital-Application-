@@ -6,6 +6,7 @@ const db = require("./data.ts");
 const app2 = require('./index.ts')
 var app = express();
 
+//Connecting Database
 var connect=mongoose.connect("mongodb://localhost:27017/Relationals", { useUnifiedTopology: true, useNewUrlParser: true })
 connect .then(() => {
   console.log('Database Connected')
@@ -13,6 +14,7 @@ connect .then(() => {
     console.log('Check Database Connection')
 })
 
+//Sessions
 app.use(session({
   name: 'prj',
   secret: '*****',
@@ -52,6 +54,9 @@ app.use(session({
     priority: 'High'
   }
 }));
+
+
+//Middlewares
 app.use(app2);
 
 var redirectHome = (req, res, next) => {
@@ -74,9 +79,11 @@ var redirectionToLogin = (req, res, next) => {
 }
 app.get('/', redirectLogin, function (req, res) {
    
-   res.render('layouts/main',{layout:false,user:req.session.prj,status:req.session.status});
+   res.render('layouts/main',{layout:false,user:req.session.chess,status:req.session.status});
 });
 
+
+//Login Logic
 app.get('/login',redirectHome, (req, res) => {
   res.render('login')
 })
@@ -85,8 +92,8 @@ app.post('/login_post', (req, res, next) => {
   db.findOne({ 'Name': req.body.username, 'Password': req.body.password })
     .then((d) => {
       if (d) {
-        req.session.prj = req.body.username
-        req.session.chess = req.body.password
+        req.session.prj = d.Email
+        req.session.chess = req.body.username
         console.log('Here')
         req.session.status=d.hosstatus
         res.redirect(303, '/')
@@ -99,6 +106,10 @@ app.post('/login_post', (req, res, next) => {
   })
     
 })
+
+
+
+//Register Logic
 app.get('/register', (req, res) => {
  res.render('register')
 })
@@ -138,6 +149,25 @@ app.post('/register_post', (req, res, next) => {
     })
     
 })
+
+// Bank Stuffs
+app.get('/bank', redirectLogin, (req, res, next) => {
+  let g
+  db.findOne({ 'Email': req.session.prj })
+    .then((d) => {
+      console.log('ok')
+      g = d.Bank.Amount;
+      g = g.toFixed(30).toString()
+      res.render('Bank', { am: g })
+    }).catch((e) => {
+      console.log(e)
+      next(e)
+    })
+  
+})
+
+
+//Logout
 app.get('/logout',redirectLogin, (req, res) => {
   req.session.destroy()
   res.clearCookie()

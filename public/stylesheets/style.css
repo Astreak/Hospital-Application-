@@ -34,3 +34,9 @@ body{
     position:relative;
     top:60px;
 }
+.Bank-amount{
+    color:green;
+    text-decoration: solid;
+    font-size:22px;
+    font-weight:bold;
+}
