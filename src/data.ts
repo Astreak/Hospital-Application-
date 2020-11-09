@@ -24,7 +24,8 @@ var Store = new Schema({
         type: String,
         require: true,
         unique: false
-    }, Bank: {
+    },
+    Bank: {
         Amount: {
             type: Number,
             require: true,
@@ -45,5 +46,5 @@ var Store = new Schema({
         timestamp:true
     })
 
-var Store = mongoose.model('Hospital', Store)
+var Store = mongoose.model('Health', Store)
 module.exports = Store;

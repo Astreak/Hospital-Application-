@@ -54,10 +54,10 @@ var redirectLogin = (req, res, next) => {
     res.redirect(303,'/login')
 }
 var redirectRegister = (req, res, next) => {
-  
+  //pass
 }
 var redirectionToLogin = (req, res, next) => {
-  
+  //pass
 }
 app.get('/', redirectLogin, function (req, res) {
    
@@ -84,41 +84,43 @@ app.post('/login_post', (req, res,next) => {
     
 })
 app.get('/register', (req, res) => {
-  console.log(req.session.chess)
-  res.render('register')
+ res.render('register')
 })
 app.get('/register/api', (req, res) => {
   console.log(req.session.chess)
   res.send("<h1> Stuff </h1>")
 })
-app.post('/register_post', (req, res,next) => {
-  let email = req.body.email
-  var temp;
-  if (!req.body.hos)
-    temp = false
-  else
-    temp=true
-  db.findOne({ 'Email': email })
+app.post('/register_post', (req, res, next) => {
+  var temp = req.body.hos ? true : false
+  console.log(temp)
+   db.findOne({ 'Email': req.body.email })
     .then((d) => {
       if (d != null) {
-        res.redirect("/login")
+        res.redirect(303,"/login")
         
       }
       else {
         return db.create({
           Name: req.body.username,
-          hosstatus: temp,
+          hosstatus:temp,
           Email: req.body.email,
           Password: req.body.password,
-          Bank:{Amount:req.body.Amount,Transaction:[]}
+          Bank: {
+            Amount: req.body.Amount,
+            Transaction: []
+          }
         })
       }
     }).then((d) => {
-      console.log('User Created');
-    }).catch((err) => {
-      next(err)
+      console.log('Registered')
+      res.redirect(303, '/')
+    }).catch((g) => {
+      console.log(g)
+      console.log('Error')
+     var e=new Error('Not Registered')
+      next(e)
     })
-  res.redirect(303,'/')
+    
 })
 app.get('/logout',redirectLogin, (req, res) => {
   req.session.destroy()
