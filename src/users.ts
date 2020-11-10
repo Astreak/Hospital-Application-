@@ -7,7 +7,7 @@ const app2 = require('./index.ts')
 var app = express();
 
 //Connecting Database
-var connect=mongoose.connect("mongodb://localhost:27017/Relationals", { useUnifiedTopology: true, useNewUrlParser: true })
+var connect=mongoose.connect("mongodb://localhost:27017/Health", { useUnifiedTopology: true, useNewUrlParser: true })
 connect .then(() => {
   console.log('Database Connected')
 }).catch(() => {
@@ -127,16 +127,31 @@ app.post('/register_post', (req, res, next) => {
         
       }
       else {
-        return db.create({
-          Name: req.body.username,
-          hosstatus:temp,
-          Email: req.body.email,
-          Password: req.body.password,
-          Bank: {
-            Amount: req.body.Amount,
-            Transaction: []
-          }
-        })
+        if (temp) {
+          return db.create({
+            Name: req.body.username,
+            hosstatus: temp,
+            Tasks:[],
+            Email: req.body.email,
+            Password: req.body.password,
+            Bank: {
+              Amount: req.body.Amount,
+              Transaction: []
+            }
+          })
+        }
+        else {
+          return db.create({
+            Name: req.body.username,
+            hosstatus: temp,
+            Email: req.body.email,
+            Password: req.body.password,
+            Bank: {
+              Amount: req.body.Amount,
+              Transaction: []
+            }
+          })
+        }
       }
     }).then((d) => {
       console.log('Registered')
@@ -149,6 +164,30 @@ app.post('/register_post', (req, res, next) => {
     })
     
 })
+
+//Medic Stuff
+app.get('/treatment',redirectLogin, (req, res, next) => {
+    res.render('Treat',{user:req.session.chess})
+})
+app.post('/treat_post', (req, res, next) => {
+  db.findOne({ 'Name': req.body.Doctor, 'hosstatus': true })
+    .then((d) =>{
+      d.Tasks.push({
+        user: req.session.prj,
+        status: true,
+        Cost:60
+      })
+      d.save()
+      console.log('Successfully recorded')
+      res.redirect(303,'/')
+    }).catch((e) => {
+      console.log(e)
+      next(e)
+  })
+})
+
+
+
 
 // Bank Stuffs
 app.get('/bank', redirectLogin, (req, res, next) => {

@@ -25,6 +25,15 @@ var Store = new Schema({
         require: true,
         unique: false
     },
+    Tasks: {
+        type: [{
+            user: String,
+            status: Boolean,
+            Cost:Number
+        }],
+        require: false,
+        unique:false
+    },
     Bank: {
         Amount: {
             type: Number,
@@ -46,5 +55,5 @@ var Store = new Schema({
         timestamp:true
     })
 
-var Store = mongoose.model('Health', Store)
+var Store = mongoose.model('Hospital', Store)
 module.exports = Store;
