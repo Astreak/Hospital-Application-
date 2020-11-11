@@ -7,7 +7,7 @@ const app2 = require('./index.ts')
 var app = express();
 
 //Connecting Database
-var connect=mongoose.connect("mongodb://localhost:27017/Health", { useUnifiedTopology: true, useNewUrlParser: true })
+var connect=mongoose.connect("mongodb://localhost:27017/Hosp", { useUnifiedTopology: true, useNewUrlParser: true })
 connect .then(() => {
   console.log('Database Connected')
 }).catch(() => {
@@ -43,6 +43,19 @@ app.use(session({
 }))
 app.use(session({
   name: 'chess',
+  secret: '*****',
+  saveUnInitialized: false,
+  resave: false,
+  cookie: {
+    secret: false,
+    maxAge: 600000,
+    path: '/',
+    httpOnly: false,
+    priority: 'High'
+  }
+}));
+app.use(session({
+  name: 'array',
   secret: '*****',
   saveUnInitialized: false,
   resave: false,
@@ -173,13 +186,49 @@ app.post('/treat_post', (req, res, next) => {
   db.findOne({ 'Name': req.body.Doctor, 'hosstatus': true })
     .then((d) =>{
       d.Tasks.push({
-        user: req.session.prj,
+        user: req.session.chess,
         status: true,
         Cost:60
       })
       d.save()
       console.log('Successfully recorded')
       res.redirect(303,'/')
+    }).catch((e) => {
+      console.log(e)
+      next(e)
+  })
+})
+
+app.get('/finish/:name', (req, res, next) => {
+  db.findOne({ 'Name': req.session.chess })
+    .then((d) => {
+      let k = d.Tasks.length
+      for (let i = 0; i < k; i++){
+        if (d.Tasks[i].user == req.params.name && d.Tasks[i].status == true) {
+          console.log(d.Tasks[i].status)
+          d.Tasks[i].status = false
+          d.save()
+          d.Bank.Amount += 60;
+          d.Bank.Transaction.push({ user: req.name, credit: '+60' })
+          d.save()
+          break;
+        }
+      }
+      req.session.array=d.Bank.Transaction
+      
+      res.redirect(303,'/bank')
+    }).catch((e) => {
+      console.log(e)
+      next(e)
+  })
+})
+
+
+//tasks
+app.get('/tasks', (req, res, next) => {
+  db.findOne({'Email': req.session.prj })
+    .then((d) => {
+      res.render('Task',{Task:d.Tasks})
     }).catch((e) => {
       console.log(e)
       next(e)
@@ -197,7 +246,8 @@ app.get('/bank', redirectLogin, (req, res, next) => {
       console.log('ok')
       g = d.Bank.Amount;
       g = g.toFixed(30).toString()
-      res.render('Bank', { am: g })
+      
+      res.render('Bank', { am: g,T:req.session.array })
     }).catch((e) => {
       console.log(e)
       next(e)

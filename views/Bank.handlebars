@@ -4,7 +4,12 @@
 <hr>
 
 <h1>Transactions</h1>
-<ul class=''>
-    
-    <li></li>
+<ul class='list-group list-group-flush'>
+    {{#each T}}
+    <li class='list-group-item'>
+         <p style="color:darkslategrey;font-size:larger;font-weight:bold">{{this.user}}</p>
+         <p style='color:green;font-size:larger;font-weight:500'>{{this.credit}}</p>
+            
+    </li>
+    {{/each}}
 </ul>

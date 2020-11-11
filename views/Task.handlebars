@@ -1,0 +1,13 @@
+<h1> Assigned Tasks</h1>
+<ul class="list-group list-group-flush">
+    {{#each Task}}
+    <li class="list-group-item">
+        {{#if this.status}}
+           <a href="/finish/{{this.user}}"><p style="color:red;font-weight:600">{{this.user}}</p></a>
+            <p style="color:antiquewhite;font-weight:500">{{this.Cost}}</p>
+        {{else}}
+             <p style="color:rgb(12, 226, 12);font-weight:600">{{this.user}}</p>
+        {{/if}}   
+    </li>
+    {{/each}}
+</ul>

@@ -1,5 +1,5 @@
 body {
-    background-image: url('../images/Rail.jpg');
+    background-image: url('../images/HOPster.jpg');
     -webkit-background-size: cover;
     text-align:center;
     display: inline;
@@ -9,7 +9,7 @@ h1{
     font-size:36px;
     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     position:relative;
-    top:150px;
+    top:310px;
     font-weight: 700px;
     color:Azure
 }
