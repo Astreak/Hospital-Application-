@@ -84,8 +84,18 @@ var redirectLogin = (req, res, next) => {
   else
     res.redirect(303,'/login')
 }
-var redirectRegister = (req, res, next) => {
-  //pass
+var redirectTask = (req, res, next) => {
+  let name = req.session.prj
+  db.findOne({ 'Email': name })
+    .then((d) => {
+      if (d.hosstatus)
+        next()
+      else
+        res.redirect(303,'/')
+    }).catch((e) => {
+      console.log(e)
+      res.redirect('/')
+    })
 }
 var redirectionToLogin = (req, res, next) => {
   //pass
@@ -239,7 +249,7 @@ app.get('/finish/:name', (req, res, next) => {
 
 
 //tasks
-app.get('/tasks', (req, res, next) => {
+app.get('/tasks',redirectTask, (req, res, next) => {
   db.findOne({'Email': req.session.prj })
     .then((d) => {
       res.render('Task',{Task:d.Tasks})
