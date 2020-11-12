@@ -17,13 +17,14 @@ const handlebars = require('express3-handlebars').create({
           return "No Auth"
       }
     },
-    //{
-    //  'times': (n, A) => {
-    //    A.forEach((item) => {
-    //      
-    //    })
-    //  }
-    //}
+    {
+      'check': (a) => {
+        if (a[0] == '+')
+          return true
+        else
+          return false
+      }
+    }
   ]
 })
 var app = express();
