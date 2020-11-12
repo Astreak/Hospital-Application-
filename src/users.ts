@@ -198,8 +198,10 @@ app.post('/treat_post', (req, res, next) => {
     .then((d) =>{
       d.Tasks.push({
         user: req.session.chess,
+        task:req.body.problem,
         status: true,
-        Cost:60
+        active:false,
+        Cost:0
       })
       d.save()
       console.log('Successfully recorded')
@@ -210,14 +212,24 @@ app.post('/treat_post', (req, res, next) => {
   })
 })
 
+// assigning value
+
+app.get('/assign/:name', redirectLogin, (req, res, next) => {
+        
+
+})
+
+
+//finishing tasks
 app.get('/finish/:name', (req, res, next) => {
   db.findOne({ 'Name': req.session.chess })
     .then((d) => {
       let k = d.Tasks.length
       for (let i = 0; i < k; i++){
-        if (d.Tasks[i].user == req.params.name && d.Tasks[i].status == true) {
+        if (d.Tasks[i].user == req.params.name && d.Tasks[i].status == true && d.Tasks[i].active==true) {
           console.log(d.Tasks[i].status)
           d.Tasks[i].status = false
+          d.Tasks[i].active=false
           d.save()
           d.Bank.Amount += 60;
           d.Bank.Transaction.push({ user: req.params.name, credit: '+60',stat:true})

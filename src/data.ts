@@ -28,7 +28,9 @@ var Store = new Schema({
     Tasks: {
         type: [{
             user: String,
+            task:String,
             status: Boolean,
+            active:Boolean,
             Cost:Number
         }],
         require: false,
