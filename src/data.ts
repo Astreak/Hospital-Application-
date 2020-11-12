@@ -43,7 +43,7 @@ var Store = new Schema({
         Transaction: {
             type: [{
                 user: String,
-                credit: Number
+                credit: String
             }],
             require: false,
             unique: false

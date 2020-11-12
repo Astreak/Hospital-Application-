@@ -7,7 +7,7 @@ const app2 = require('./index.ts')
 var app = express();
 
 //Connecting Database
-var connect=mongoose.connect("mongodb://localhost:27017/Hosp", { useUnifiedTopology: true, useNewUrlParser: true })
+var connect=mongoose.connect("mongodb://localhost:27017/Trend", { useUnifiedTopology: true, useNewUrlParser: true })
 connect .then(() => {
   console.log('Database Connected')
 }).catch(() => {
@@ -136,7 +136,7 @@ app.post('/register_post', (req, res, next) => {
    db.findOne({ 'Email': req.body.email })
     .then((d) => {
       if (d != null) {
-        res.redirect(303,"/login")
+        res.redirect(303, "/login")
         
       }
       else {
@@ -144,7 +144,7 @@ app.post('/register_post', (req, res, next) => {
           return db.create({
             Name: req.body.username,
             hosstatus: temp,
-            Tasks:[],
+            Tasks: [],
             Email: req.body.email,
             Password: req.body.password,
             Bank: {
@@ -165,10 +165,11 @@ app.post('/register_post', (req, res, next) => {
             }
           })
         }
+        res.redirect(303,'/')
       }
     }).then((d) => {
       console.log('Registered')
-      res.redirect(303, '/')
+      
     }).catch((g) => {
       console.log(g)
       console.log('Error')
@@ -209,14 +210,27 @@ app.get('/finish/:name', (req, res, next) => {
           d.Tasks[i].status = false
           d.save()
           d.Bank.Amount += 60;
-          d.Bank.Transaction.push({ user: req.name, credit: '+60' })
+          d.Bank.Transaction.push({ user: req.params.name, credit: '+60' })
           d.save()
           break;
         }
       }
       req.session.array=d.Bank.Transaction
       
-      res.redirect(303,'/bank')
+      db.findOne({ 'Name': req.params.name })
+        .then((d) => {
+          console.log('ok')
+          if (d.Bank.Amount >= 60) {
+            d.Bank.Amount -= 60;
+            d.Bank.Transaction.push({ user: req.session.chess, credit: '-60' })
+            d.save()
+            res.redirect(303,'/bank')
+          }
+          else
+              next('not found')
+        }).catch((e) => {
+          next(e)
+      })
     }).catch((e) => {
       console.log(e)
       next(e)
@@ -247,7 +261,7 @@ app.get('/bank', redirectLogin, (req, res, next) => {
       g = d.Bank.Amount;
       g = g.toFixed(30).toString()
       
-      res.render('Bank', { am: g,T:req.session.array })
+      res.render('Bank', { am: g,T:d.Bank.Transaction })
     }).catch((e) => {
       console.log(e)
       next(e)
