@@ -43,7 +43,8 @@ var Store = new Schema({
         Transaction: {
             type: [{
                 user: String,
-                credit: String
+                credit: String,
+                stat:Boolean
             }],
             require: false,
             unique: false
@@ -55,5 +56,5 @@ var Store = new Schema({
         timestamp:true
     })
 
-var Store = mongoose.model('FORCE', Store)
+var Store = mongoose.model('hosp', Store)
 module.exports = Store;

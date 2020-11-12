@@ -210,7 +210,7 @@ app.get('/finish/:name', (req, res, next) => {
           d.Tasks[i].status = false
           d.save()
           d.Bank.Amount += 60;
-          d.Bank.Transaction.push({ user: req.params.name, credit: '+60' })
+          d.Bank.Transaction.push({ user: req.params.name, credit: '+60',stat:true})
           d.save()
           break;
         }
@@ -222,7 +222,7 @@ app.get('/finish/:name', (req, res, next) => {
           console.log('ok')
           if (d.Bank.Amount >= 60) {
             d.Bank.Amount -= 60;
-            d.Bank.Transaction.push({ user: req.session.chess, credit: '-60' })
+            d.Bank.Transaction.push({ user: req.session.chess, credit: '-60',stat:false})
             d.save()
             res.redirect(303,'/bank')
           }

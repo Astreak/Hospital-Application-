@@ -8,9 +8,13 @@
     {{#each T}}
     <li class='list-group-item'>
          <p style="color:darkslategrey;font-size:larger;font-weight:bold">{{this.user}}</p>
-        
+         {{#if this.stat}}
          <p class="general" style='color:rgb(19, 231, 19);font-size:larger;font-weight:700'>{{this.credit}}</p>
-        
+         {{else}}
+        <p class="general" style='color:rgb(248, 9, 9);font-size:larger;font-weight:700'>{{this.credit}}</p>
+
+        {{/if}}
+
             
     </li>
     {{/each}}
