@@ -58,5 +58,5 @@ var Store = new Schema({
         timestamp:true
     })
 
-var Store = mongoose.model('hosp', Store)
+var Store = mongoose.model('Jock', Store)
 module.exports = Store;

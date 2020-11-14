@@ -215,13 +215,32 @@ app.post('/treat_post', (req, res, next) => {
 // assigning value
 
 app.get('/assign/:name', redirectLogin, (req, res, next) => {
-        
+        res.render('Assign',{usr:req.params.name})
 
+})
+app.post('/assign_post/:name', (req, res, next) => {
+  db.findOne({ 'Email': req.session.prj })
+    .then((d) => {
+      var g = d.Tasks.length;
+      for (let i = 0; i < g; i++){
+        if (req.params.name == d.Tasks[i].user && d.Task[i].active == false) {
+          d.Tasks[i].active = true
+          d.Tasks[i].Cost = req.body.cost
+          d.save()
+          break;
+        }
+      }
+      res.redirect(303,'/tasks')
+    }).catch((e) => {
+      console.log(e)
+      next(e)
+  })
 })
 
 
 //finishing tasks
 app.get('/finish/:name', (req, res, next) => {
+  let temp;
   db.findOne({ 'Name': req.session.chess })
     .then((d) => {
       let k = d.Tasks.length
@@ -231,8 +250,9 @@ app.get('/finish/:name', (req, res, next) => {
           d.Tasks[i].status = false
           d.Tasks[i].active=false
           d.save()
-          d.Bank.Amount += 60;
-          d.Bank.Transaction.push({ user: req.params.name, credit: '+60',stat:true})
+          temp = d.Tasks[i].Cost
+          d.Bank.Amount += temp
+          d.Bank.Transaction.push({ user: req.params.name, credit: `+${temp}`,stat:true})
           d.save()
           break;
         }
@@ -243,8 +263,8 @@ app.get('/finish/:name', (req, res, next) => {
         .then((d) => {
           console.log('ok')
           if (d.Bank.Amount >= 60) {
-            d.Bank.Amount -= 60;
-            d.Bank.Transaction.push({ user: req.session.chess, credit: '-60',stat:false})
+            d.Bank.Amount -= temp
+            d.Bank.Transaction.push({ user: req.session.chess, credit: `-${temp}`,stat:false})
             d.save()
             res.redirect(303,'/bank')
           }
