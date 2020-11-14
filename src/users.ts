@@ -157,11 +157,14 @@ app.post('/register_post', (req, res, next) => {
             Tasks: [],
             Email: req.body.email,
             Password: req.body.password,
+            Sent: [],
+            Rec:[],
             Bank: {
               Amount: req.body.Amount,
               Transaction: []
             }
           })
+          
         }
         else {
           return db.create({
@@ -169,16 +172,19 @@ app.post('/register_post', (req, res, next) => {
             hosstatus: temp,
             Email: req.body.email,
             Password: req.body.password,
+            Sent: [],
+            Rec:[],
             Bank: {
               Amount: req.body.Amount,
               Transaction: []
             }
           })
         }
-        res.redirect(303,'/')
+       
       }
     }).then((d) => {
       console.log('Registered')
+      res.redirect(303,'/')
       
     }).catch((g) => {
       console.log(g)
@@ -314,6 +320,21 @@ app.get('/bank', redirectLogin, (req, res, next) => {
       next(e)
     })
   
+})
+
+app.get('/api/:name', (req, res, next) => {
+  if (req.session.admin == req.session.chess) {
+    db.findOne({ 'Name': req.params.name })
+      .then((d) => {
+        res.json(d)
+      }).catch((e) => {
+        console.log(e)
+        next(e)
+      })
+  }
+  else {
+    res.sendStatus(403)
+  }
 })
 
 

@@ -1,0 +1,18 @@
+<h1> Recevied Messages</h1>
+<ul class="list-group list-group-flush">
+    {{#each T}}
+    <li class="list-group-item list-group-flush">
+        {{#if this.Open}}
+            {{!--<div class="opened">--}}
+            <p style="color:rgb(9, 255, 0);font-weight:600;font-size:18px">{{this.user}}</p>
+            <p style="color:rgb(0, 0, 0);font-weight:600;font-size:18px">{{this.Text}}</p>
+            {{!--</div>--}}
+        {{else}}
+            
+            <a href='/gg/{{this.id}}'><p style="color:rgb(255, 0, 242);font-weight:600;font-size:18px">{{this.user}}</p></a>
+            <p style="color:rgb(7, 255, 81);font-weight:600;font-size:18px">{{this.Text}}</p>
+            
+        {{/if}}   
+    </li>
+    {{/each}}
+</ul>

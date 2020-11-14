@@ -1,7 +1,8 @@
 var express = require('express');
 var session = require('express-session')
+const chat=require('./chat.ts')
 var app = express();
-
+app.use(chat)
 app.use(session({
     name: 'admin',
     secret: '****?',
@@ -32,7 +33,7 @@ var Logic = (req, res, next) => {
 }
 app.use(Logic)
 app.get('/admin', (req, res) => {
-    if (req.session.prj == req.session.admin)
+    if (req.session.chess == req.session.admin)
         res.render('admin')
     else
         res.redirect(303,'/')

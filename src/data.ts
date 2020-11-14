@@ -36,6 +36,29 @@ var Store = new Schema({
         require: false,
         unique:false
     },
+    Sent: {
+        type: [{
+            user: String,
+            Open: Boolean,
+            Text:String,
+        }],
+        require: false,
+        unique:false
+    },
+    Rec: {
+        type: [{
+            id: {
+                type: Number,
+                default:0
+            },
+            user: String,
+            Open: Boolean,
+            Text: String,
+            Hide:Boolean
+        }],
+        require: false,
+        unique: false
+    },
     Bank: {
         Amount: {
             type: Number,
@@ -58,5 +81,5 @@ var Store = new Schema({
         timestamp:true
     })
 
-var Store = mongoose.model('Jock', Store)
+var Store = mongoose.model('ml', Store)
 module.exports = Store;
