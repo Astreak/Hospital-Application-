@@ -4,16 +4,16 @@
     <li class="list-group-item list-group-flush">
         {{#if this.status}}
             {{#if this.active}}
-                <a href="/finish/{{this.user}}"><p style="color:yellow;font-weight:600">{{this.user}}</p></a>
+                <a href="/finish/{{this.user}}"><p style="color:rgb(255, 255, 1);font-weight:600;font-size:18px">{{this.user}}</p></a>
             {{else}}
-                <a href="/assign/{{this.user}}">
-                    <p style="color:red;font-weight:600">{{this.user}}</p>
-                </a>
+                
+                    <p style="color:red;font-weight:600;font-size:18px">{{this.user}}</p>
+                <a class="btn btn-primary" href='/assign/{{this.user}}'>Set Price</a>
             {{/if}}
 
-            <p style="color:antiquewhite;font-weight:500">{{this.Cost}}</p>
+            <p style="color:rgb(255, 255, 255);font-weight:500">{{this.Cost}}</p>
         {{else}}
-             <p style="color:rgb(12, 226, 12);font-weight:600">{{this.user}}</p>
+             <p style="color:rgb(0, 255, 0);font-weight:600;font-size:18px">{{this.user}}</p>
         {{/if}}   
     </li>
     {{/each}}
