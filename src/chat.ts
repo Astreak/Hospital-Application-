@@ -50,7 +50,7 @@ app.get('/gg/:id', (req, res, next) => {
             
             var p = d.Rec.length
             for (let i = 0; i < p; i++){
-                if (d.Rec[i].id = req.params.id) {
+                if (d.Rec[i].id == req.params.id) {
                     d.Rec[i].Open = true
                     d.save()
                     break
@@ -61,6 +61,16 @@ app.get('/gg/:id', (req, res, next) => {
             console.log(e)
             next(e)
     })
+})
+app.get('/sent', (req, res, next) => {
+    db.findOne({ 'Email': req.session.prj })
+        .then((d) => {
+            res.render('Rec', { T: d.Rec, usr: req.session.chess })
+        }).catch((e) => {
+            console.log(e)
+            next(e)
+        })
+
 })
 
 module.exports=app
