@@ -4,6 +4,9 @@ const cookie = require('cookie-parser');
 const mongoose=require('mongoose')
 const db = require("./data.ts");
 const app2 = require('./index.ts')
+const auth=require('./Auth')
+const bcrypt = require('bcryptjs')
+const fileStore=require('session-file-store')(session)
 var app = express();
 
 //Connecting Database
@@ -24,8 +27,11 @@ app.use(session({
     secret: false,
     maxAge: 6000000,
     path: '/',
-    httpOnly: false,
-    priority: 'High'
+    httpOnly: true,
+    priority: 'High',
+    ephemeral: true,
+    store:new fileStore()
+
   }
 }))
 app.use(session({
@@ -37,8 +43,9 @@ app.use(session({
     secret: false,
     maxAge: 6000000,
     path: '/',
-    httpOnly: false,
-    priority: 'High'
+    httpOnly: true,
+    priority: 'High',
+    ephemeral:true
   }
 }))
 app.use(session({
@@ -51,7 +58,8 @@ app.use(session({
     maxAge: 600000,
     path: '/',
     httpOnly: false,
-    priority: 'High'
+    priority: 'High',
+    ephemeral:true
   }
 }));
 app.use(session({
@@ -64,12 +72,14 @@ app.use(session({
     maxAge: 600000,
     path: '/',
     httpOnly: false,
-    priority: 'High'
+    priority: 'High',
+    epehmeral:true
   }
 }));
 
 
 //Middlewares
+app.use(auth);
 app.use(app2);
 
 var redirectHome = (req, res, next) => {
@@ -111,7 +121,8 @@ var redirectTreat = (req, res, next) => {
   })
 }
 app.get('/', redirectLogin, function (req, res) {
-   console.log(process.env.NAME)
+  console.log(process.env.NAME)
+  console.log(req.session)
    res.render('layouts/main',{layout:false,user:req.session.chess,status:req.session.status});
 });
 

@@ -1,8 +1,10 @@
 var express = require('express');
 var session = require('express-session')
-const chat=require('./chat.ts')
+const chat = require('./chat.ts')
+const Auth=require('./Auth.js')
 var app = express();
 app.use(chat)
+app.use(Auth)
 app.use(session({
     name: 'admin',
     secret: process.env.PASS,
