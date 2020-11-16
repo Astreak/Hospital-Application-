@@ -27,7 +27,7 @@ app.post('/msg_post', (req, res, next) => {
                     })
                     D.save()
                 })
-            res.redirect(303,'/')
+            res.redirect(303,'/msg')
         }).catch((E) => {
             console.log(E)
             next(E)
@@ -61,18 +61,18 @@ app.get('/gg/:id', (req, res, next) => {
             next(e)
     })
 })
-app.get('/sent', (req, res, next) => {
-    db.findOne({ 'Email': req.session.prj })
-        .then((d) => {
-            res.render('Rec', { T: d.Sent, usr: req.session.chess })
-        }).catch((e) => {
-            console.log(e)
-            next(e)
-        })
-
-})
+//app.get('/sent', (req, res, next) => {
+//    db.findOne({ 'Email': req.session.prj })
+//        .then((d) => {
+//            res.render('Rec', { T: d.Sent, usr: req.session.chess })
+//        }).catch((e) => {
+//            console.log(e)
+//            next(e)
+//        })
+//
+//})
 app.get('/kk/:id', (req, res, next) => {
-    var t = req.paramas.id
+    var t = req.params.id
     db.findOne({ 'Email': req.session.prj })
         .then((d) => {
             var g = d.Rec.length;
@@ -83,6 +83,7 @@ app.get('/kk/:id', (req, res, next) => {
                     break
                 }
             }
+            res.redirect(303,'/rec')
         }).catch((e) => {
             console.log(e)
             next(e)

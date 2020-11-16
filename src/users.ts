@@ -97,8 +97,18 @@ var redirectTask = (req, res, next) => {
       res.redirect('/')
     })
 }
-var redirectionToLogin = (req, res, next) => {
-  //pass
+var redirectTreat = (req, res, next) => {
+  let t = req.session.prj
+  db.findOne({ 'Email': t })
+    .then((d) => {
+      if (d.hosstatus)
+        next()
+      else
+        res.sendStatus(500)
+    }).catch((e) => {
+      console.log(e)
+      next(e)
+  })
 }
 app.get('/', redirectLogin, function (req, res) {
    
@@ -196,7 +206,7 @@ app.post('/register_post', (req, res, next) => {
 })
 
 //Medic Stuff
-app.get('/treatment',redirectLogin, (req, res, next) => {
+app.get('/treatment',[redirectLogin,redirectTreat], (req, res, next) => {
     res.render('Treat',{user:req.session.chess})
 })
 app.post('/treat_post', (req, res, next) => {
@@ -211,7 +221,7 @@ app.post('/treat_post', (req, res, next) => {
       })
       d.save()
       console.log('Successfully recorded')
-      res.redirect(303,'/')
+      res.redirect(303,'/treatment')
     }).catch((e) => {
       console.log(e)
       next(e)
