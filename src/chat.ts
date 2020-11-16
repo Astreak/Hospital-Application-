@@ -22,7 +22,6 @@ app.post('/msg_post', (req, res, next) => {
                         id: D.Rec.length+1,
                         user: d.Name,
                         Open: false,
-                        Read: false,
                         Text: req.body.msg,
                         Hide:false
                     })
@@ -65,12 +64,29 @@ app.get('/gg/:id', (req, res, next) => {
 app.get('/sent', (req, res, next) => {
     db.findOne({ 'Email': req.session.prj })
         .then((d) => {
-            res.render('Rec', { T: d.Rec, usr: req.session.chess })
+            res.render('Rec', { T: d.Sent, usr: req.session.chess })
         }).catch((e) => {
             console.log(e)
             next(e)
         })
 
+})
+app.get('/kk/:id', (req, res, next) => {
+    var t = req.paramas.id
+    db.findOne({ 'Email': req.session.prj })
+        .then((d) => {
+            var g = d.Rec.length;
+            for (let i = 0; i < g; i++){
+                if (t == d.Rec[i].id) {
+                    d.Rec[i].Hide = true
+                    d.save()
+                    break
+                }
+            }
+        }).catch((e) => {
+            console.log(e)
+            next(e)
+    })
 })
 
 module.exports=app

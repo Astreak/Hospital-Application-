@@ -1,19 +1,22 @@
 <h1> Recevied Messages</h1>
 <ul class="list-group list-group-flush">
     {{#each T}}
-   
-        {{#if this.Open}}
-            <li class="list-group-item list-group-flush">
-            {{!--<div class="opened">--}}
-            <p style="color:rgb(9, 255, 0);font-weight:600;font-size:18px">{{this.user}}</p>
-            <p style="color:rgb(0, 0, 0);font-weight:600;font-size:18px">{{this.Text}}</p>
-            </li>
-            {{!--</div>--}}
+        {{#if this.Hide}}
         {{else}}
-            <li class="list-group-item list-group-flush" style="background-color:bisque">
-            <a href='/gg/{{this.id}}'><p style="color:rgb(76, 0, 255);font-weight:600;font-size:18px">{{this.user}}</p></a>
-            <p style="color:rgb(255, 0, 0);font-weight:600;font-size:18px">{{this.Text}}</p>
-            </li>
+            {{#if this.Open}}
+                <li class="list-group-item list-group-flush">
+                {{!--<div class="opened">--}}
+                <p style="color:rgb(9, 255, 0);font-weight:600;font-size:18px">{{this.user}}</p>
+                <p style="color:rgb(0, 0, 0);font-weight:600;font-size:18px">{{this.Text}}</p>
+                <a href="/kk/{{this.id}}" class="btn btn-primary">Hide it </a>
+                </li>
+                {{!--</div>--}}
+            {{else}}
+                <li class="list-group-item list-group-flush" style="background-color:bisque">
+                <a href='/gg/{{this.id}}'><p style="color:rgb(76, 0, 255);font-weight:600;font-size:18px">{{this.user}}</p></a>
+                <p style="color:rgb(255, 0, 0);font-weight:600;font-size:18px">{{this.Text}}</p>
+                </li>
+            {{/if}}
         {{/if}}   
     
     {{/each}}
