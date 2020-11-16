@@ -7,7 +7,7 @@ const app2 = require('./index.ts')
 var app = express();
 
 //Connecting Database
-var connect=mongoose.connect("mongodb://localhost:27017/Trend", { useUnifiedTopology: true, useNewUrlParser: true })
+var connect=mongoose.connect(process.env.CONNEC, { useUnifiedTopology: true, useNewUrlParser: true })
 connect .then(() => {
   console.log('Database Connected')
 }).catch(() => {
@@ -111,7 +111,7 @@ var redirectTreat = (req, res, next) => {
   })
 }
 app.get('/', redirectLogin, function (req, res) {
-   
+   console.log(process.env.NAME)
    res.render('layouts/main',{layout:false,user:req.session.chess,status:req.session.status});
 });
 

@@ -3,6 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var env=require('dotenv').config()
 
 
 var usersRouter = require('./src/users.ts');
