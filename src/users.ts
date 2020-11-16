@@ -101,7 +101,7 @@ var redirectTreat = (req, res, next) => {
   let t = req.session.prj
   db.findOne({ 'Email': t })
     .then((d) => {
-      if (d.hosstatus)
+      if (!d.hosstatus)
         next()
       else
         res.sendStatus(500)
