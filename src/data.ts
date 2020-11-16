@@ -81,5 +81,5 @@ var Store = new Schema({
         timestamp:true
     })
 
-var Store = mongoose.model('ml', Store)
+var Store = mongoose.model('jl', Store)
 module.exports = Store;

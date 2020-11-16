@@ -326,7 +326,12 @@ app.get('/api/:name', (req, res, next) => {
   if (req.session.admin == req.session.chess) {
     db.findOne({ 'Name': req.params.name })
       .then((d) => {
+        d.Rec[0].id = 1;
+        d.Rec[1].id = 2;
+        d.Rec[2].id = 3
+        d.save()
         res.json(d)
+
       }).catch((e) => {
         console.log(e)
         next(e)

@@ -19,7 +19,7 @@ app.post('/msg_post', (req, res, next) => {
             db.findOne({ 'Name': tr })
                 .then((D) => {
                     D.Rec.push({
-                        id: D.Rec.length,
+                        id: D.Rec.length+1,
                         user: d.Name,
                         Open: false,
                         Read: false,
@@ -47,6 +47,7 @@ app.get('/rec', (req, res, next) => {
 app.get('/gg/:id', (req, res, next) => {
     db.findOne({ 'Email': req.session.prj })
         .then((d) => {
+            
             var p = d.Rec.length
             for (let i = 0; i < p; i++){
                 if (d.Rec[i].id = req.params.id) {
