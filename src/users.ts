@@ -30,7 +30,7 @@ app.use(session({
 }))
 app.use(session({
   name: 'status',
-  secret: '*****',
+  secret: process.env.PASS,
   saveUnInitialized: false,
   resave: false,
   cookie: {
@@ -43,7 +43,7 @@ app.use(session({
 }))
 app.use(session({
   name: 'chess',
-  secret: '*****',
+  secret: process.env.PASS,
   saveUnInitialized: false,
   resave: false,
   cookie: {
@@ -56,7 +56,7 @@ app.use(session({
 }));
 app.use(session({
   name: 'array',
-  secret: '*****',
+  secret: process.env.PASS,
   saveUnInitialized: false,
   resave: false,
   cookie: {

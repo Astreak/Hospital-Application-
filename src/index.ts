@@ -5,7 +5,7 @@ var app = express();
 app.use(chat)
 app.use(session({
     name: 'admin',
-    secret: '****?',
+    secret: process.env.PASS,
     saveUnInitialized: false,
     resave: false,
     cookie: {
@@ -17,7 +17,7 @@ app.use(session({
 }));
 app.use(session({
     name: 'bank',
-    secret: '****?',
+    secret: process.env.PASS,
     saveUnInitialized: false,
     resave: false,
     cookie: {
@@ -28,7 +28,7 @@ app.use(session({
     }
 }));
 var Logic = (req, res, next) => {
-    req.session.admin = 'paraj'
+    req.session.admin = process.env.ADMIN
     next()
 }
 app.use(Logic)
