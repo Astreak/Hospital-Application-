@@ -324,8 +324,13 @@ app.get('/tasks',redirectTask, (req, res, next) => {
 // assigning value
 
 app.get('/assign/:name', redirectLogin, (req, res, next) => {
-  res.render('Ann', { usr: req.params.name})
+  req.session.status=req.params.name
+  res.redirect(303,'/assign')
 
+})
+app.get('/assign', (req, res, next) => {
+    console.log(req.session.status)
+    res.render('Ann', { usr: req.session.status})
 })
 app.post('/assign_post/:name', redirectLogin, (req, res, next) => {
   console.log(req.params.name)
