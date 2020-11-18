@@ -87,6 +87,20 @@ app.use(session({
     epehmeral:true
   }
 }));
+app.use(session({
+  name: 'anny',
+  secret: process.env.PASS,
+  saveUnInitialized: false,
+  resave: false,
+  cookie: {
+    secret: false,
+    maxAge: 600000,
+    path: '/',
+    httpOnly: false,
+    priority: 'High',
+    epehmeral: true
+  }
+}));
 
 
 //Middlewares
@@ -239,7 +253,8 @@ app.post('/treat_post', (req, res, next) => {
         task:req.body.problem,
         status: true,
         active:false,
-        Cost:0
+        Cost: 0,
+        hide:false
       })
       d.save()
       db.findOne({ 'Email': req.session.prj })
@@ -249,6 +264,7 @@ app.post('/treat_post', (req, res, next) => {
             Aid: req.body.problem,
             Acc1: false,
             Acc2: false,
+            Start:false,
             Comp: false,
             Details:[]
           })
@@ -354,6 +370,42 @@ app.post('/assign_post/:name', redirectLogin, (req, res, next) => {
       console.log(e)
       next(e)
     })
+})
+
+app.get('/del/:name', redirectLogin, (req, res, next) => {
+  db.findOne({ 'Email': req.session.prj})
+    .then((d) => {
+      let r = d.Tasks.length;
+      for (let i = 0; i < r; i++){
+        if (d.Tasks[i].user = req.params.name && d.Tasks[i].status == true) {
+          d.Tasks[i].status = false;
+          d.save()
+          break
+        }
+      }
+      res.redirect(303,'/tasks')
+    }).catch((e) => {
+      console.log(e)
+      next(e)
+  })
+
+})
+app.get('/hide/:name', (req, res, next) => {
+  let n = req.params.name;
+  db.findOne({ 'Email': req.session.prj })
+    .then((d) => {
+      let r = d.Tasks.length;
+      for (let i = 0; i < r; i++){
+        if (d.Tasks[i].user == n && d.Tasks[i].status == false, d.Tasks[i].hide == false) {
+          d.Tasks[i].hide = true
+          d.save()
+        }
+      }
+      res.redirect(303,'/tasks')
+    }).catch((e) => {
+      console.log(e)
+      res.redirect('error')
+  })
 })
 
 

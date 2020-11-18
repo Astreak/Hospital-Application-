@@ -31,6 +31,7 @@ var Store = new Schema({
             Aid: String,
             Acc1: Boolean,
             Acc2: Boolean,
+            Start:Boolean,
             Comp:Boolean,
             Details: {
                 type: [String],
@@ -47,7 +48,8 @@ var Store = new Schema({
             task:String,
             status: Boolean,
             active:Boolean,
-            Cost:Number
+            Cost: Number,
+            hide:false,
         }],
         require: false,
         unique:false
@@ -97,5 +99,5 @@ var Store = new Schema({
         timestamp:true
     })
 
-var Store = mongoose.model('rant', Store)
+var Store = mongoose.model('lon', Store)
 module.exports = Store;

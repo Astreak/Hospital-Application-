@@ -14,7 +14,7 @@ var basicAuth = (req, res, next) => {
   var auth = new Buffer.from(authHeader.split(' ')[1], 'base64').toString().split(':');
   var user = auth[0];
   var pass = auth[1];
-  if (user == process.env.NAME && pass == process.env.PASS) {
+  if (user == process.env.NAME && pass == process.env.past) {
       next(); 
   } else {
       var err = new Error('You are not authenticated!');
