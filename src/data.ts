@@ -25,6 +25,22 @@ var Store = new Schema({
         require: true,
         unique: false
     },
+    Treat: {
+        type: [{
+            user: String,
+            Aid: String,
+            Acc1: Boolean,
+            Acc2: Boolean,
+            Comp:Boolean,
+            Details: {
+                type: [String],
+                required: false,
+                unique:false
+            }
+        }],
+        required: false,
+        unique:false
+    },
     Tasks: {
         type: [{
             user: String,
@@ -81,5 +97,5 @@ var Store = new Schema({
         timestamp:true
     })
 
-var Store = mongoose.model('jl', Store)
+var Store = mongoose.model('rant', Store)
 module.exports = Store;

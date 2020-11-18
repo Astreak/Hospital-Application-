@@ -8,6 +8,17 @@ const auth=require('./Auth')
 const bcrypt = require('bcryptjs')
 const fileStore=require('session-file-store')(session)
 var app = express();
+const { Client } = require('pg');
+var client = new Client({
+  user: 'postgres',
+  password: process.env.past,
+  database: 'random',
+  host: 'localhost',
+  port:5432
+})
+client.connect()
+  .then(() => console.log('psql connected'))
+  .catch((e)=>console.log(e))
 
 //Connecting Database
 var connect=mongoose.connect(process.env.CONNEC, { useUnifiedTopology: true, useNewUrlParser: true })
@@ -231,6 +242,18 @@ app.post('/treat_post', (req, res, next) => {
         Cost:0
       })
       d.save()
+      db.findOne({ 'Email': req.session.prj })
+        .then((D) => {
+          D.Treat.push({
+            user: d.Name,
+            Aid: req.body.problem,
+            Acc1: false,
+            Acc2: false,
+            Comp: false,
+            Details:[]
+          })
+          D.save()
+      })
       console.log('Successfully recorded')
       res.redirect(303,'/treatment')
     }).catch((e) => {
@@ -238,6 +261,11 @@ app.post('/treat_post', (req, res, next) => {
       next(e)
   })
 })
+
+
+
+
+
 
 
 
@@ -282,7 +310,6 @@ app.get('/finish/:name', (req, res, next) => {
   })
 })
 
-
 //tasks
 app.get('/tasks',redirectTask, (req, res, next) => {
   db.findOne({'Email': req.session.prj })
@@ -297,7 +324,7 @@ app.get('/tasks',redirectTask, (req, res, next) => {
 // assigning value
 
 app.get('/assign/:name', redirectLogin, (req, res, next) => {
-  res.render('A', { usr: req.params.name })
+  res.render('Ann', { usr: req.params.name})
 
 })
 app.post('/assign_post/:name', redirectLogin, (req, res, next) => {
@@ -333,7 +360,7 @@ app.get('/bank', redirectLogin, (req, res, next) => {
     .then((d) => {
       console.log('ok')
       g = d.Bank.Amount;
-      g = g.toFixed(30).toString()
+      g = g.toFixed(10).toString()
       
       res.render('Bank', { am: g,T:d.Bank.Transaction })
     }).catch((e) => {
