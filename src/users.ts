@@ -264,7 +264,7 @@ app.post('/treat_post', (req, res, next) => {
             Aid: req.body.problem,
             Acc1: false,
             Acc2: false,
-            Start:false,
+            Start:true,
             Comp: false,
             Details:[]
           })
