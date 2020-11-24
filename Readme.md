@@ -10,4 +10,4 @@ Starting off Creating a hospital application managing diffirent servers (medical
 - Handlebars templating engine
 - express js
 - passport.js
-- Postgres 
+- Postgresql

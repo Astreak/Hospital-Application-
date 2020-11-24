@@ -2,7 +2,7 @@ const express = require('express');
 const db = require('./data.ts');
 const session = require('express-session');
 
-app = express();
+var app = express();
 app.use(session({
         name: 'Hond',
         secret: process.env.PASS,
