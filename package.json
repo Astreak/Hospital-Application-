@@ -3,11 +3,11 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www.ts"
+    "start": "nodemon ./bin/www.js"
   },
   "engines": {
-        "node":"^14.15.0",
-        "npm":"^6.14.8"
+    "node": "^14.15.0",
+    "npm": "^6.14.8"
   },
   "dependencies": {
     "@types/node": "^14.14.6",
@@ -31,6 +31,6 @@
     "react-router-dom": "^5.2.0",
     "request": "^2.88.2",
     "session-file-store": "^1.5.0",
-    "ts-node": "^9.0.0"
+    "ts-node": "^9.1.0"
   }
 }

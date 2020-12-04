@@ -21,7 +21,7 @@ var app = express();
 //   .catch((e)=>console.log(e))
 
 //Connecting Database
-var connect = mongoose.connect("mongodb+srv://prj:giveusatank@hospital-app.hafw4.mongodb.net/hospital?retryWrites=true&w=majority", { useUnifiedTopology: true, useNewUrlParser: true })
+var connect = mongoose.connect(process.env.CONNEC, { useUnifiedTopology: true, useNewUrlParser: true })
 connect .then(() => {
     console.log('Database Connected')
 }).catch(() => {
@@ -431,9 +431,9 @@ app.get('/api/:name', (req, res, next) => {
   if (req.session.admin == req.session.chess) {
     db.findOne({ 'Name': req.params.name })
       .then((d) => {
-        d.Rec[0].id = 1;
-        d.Rec[1].id = 2;
-        d.Rec[2].id = 3
+        // d.Rec[0].id = 1;
+        // d.Rec[1].id = 2;
+        // d.Rec[2].id = 3
         d.save()
         res.json(d)
 
