@@ -14,9 +14,36 @@
 </style>
 
 <body>
-    <nav class="navbar navbar-light bg-light" style="font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light" style="font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">
         <a href="#" class="navbar-brand" style="font-weight: 500;">Medical Application</a>
         {{# if user }}
+            <div class="collapse navbar-collapse">
+                
+                <ul class="navbar-nav">
+                    <li class="navbar-item">
+                        {{# if status}}
+                        <a class='nav-link' href='/tasks'>Tasks</a>
+                        {{ else }}
+                        <a class='nav-link' href='/treatment'>Treat Yourself</a>
+                       {{/if}}
+                    </li>
+                </ul>
+                <ul class="navbar-nav">
+                    
+                    <li class="navbar-item">
+                        <a class='nav-link' href='/bank'>Bank</a>
+                    </li>
+                    <li class="navbar-item">
+                        <a class='nav-link' href='/rec'>Recieved Message</a>
+                    </li>
+                    <li class="navbar-item">
+                        <a class='nav-link' href='/rec'>Message</a>
+                    </li>
+                    <li class="navbar-item" id='okayish'>
+                        <a class='nav-link active' href='/logout'>Logout</a>
+                    </li>
+                </ul>
+            </div>
             <ul class="navbar-nav ml-auto">
                 
 
@@ -29,22 +56,7 @@
                 <p>
                 </span>
             </ul>
-            <div class="collapse navbar-collapse">
-                <ul class="navbar-nav">
-                    <li class="navbar-item">
-                        <a class='navbar-link' href='/logout'>Logout</a>
-                    </li>
-                </ul>
-                <ul class="navbar-nav">
-                    <li class="navbar-item">
-                        {{# if status}}
-                        <a class='navbar-link' href='/tasks'>Tasks</a>
-                        {{ else }}
-                        <a class='navbar-link' href='/treatment'>Treat Yourself</a>
-                        {{/if}}
-                    </li>
-                </ul>
-            </div>
+            
         {{/if}}
         
     </nav>

@@ -36,3 +36,9 @@ img{
     color:dodgerblue;
     font-style: italic;
 }
+#okayish{
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    position:realtive;
+    right:140px;
+    top:20px;
+}
