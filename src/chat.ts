@@ -62,7 +62,7 @@ app.get('/gg/:id', (req, res, next) => {
                     break
                 }
             }
-            res.redirect(303,'/msg')
+            res.redirect(303,'/rec')
         }).catch((e) => {
             console.log(e)
             next(e)

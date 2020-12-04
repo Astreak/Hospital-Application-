@@ -21,7 +21,7 @@ var app = express();
 //   .catch((e)=>console.log(e))
 
 //Connecting Database
-var connect = mongoose.connect(process.env.CONNEC, { useUnifiedTopology: true, useNewUrlParser: true })
+var connect = mongoose.connect("mongodb+srv://prj:giveusatank@hospital-app.hafw4.mongodb.net/hospital?retryWrites=true&w=majority", { useUnifiedTopology: true, useNewUrlParser: true })
 connect .then(() => {
     console.log('Database Connected')
 }).catch(() => {
@@ -199,6 +199,11 @@ app.post('/register_post', (req, res, next) => {
         if (temp) {
           return db.create({
             Name: req.body.username,
+            Profile: {
+              Name: req.body.username,
+              Description: '',
+              Exp:''
+            },
             hosstatus: temp,
             Tasks: [],
             Email: req.body.email,
@@ -215,6 +220,11 @@ app.post('/register_post', (req, res, next) => {
         else {
           return db.create({
             Name: req.body.username,
+            Profile: {
+              Name: req.body.username,
+              Description: '',
+              Exp: ''
+            },
             hosstatus: temp,
             Email: req.body.email,
             Password: req.body.password,
@@ -229,12 +239,12 @@ app.post('/register_post', (req, res, next) => {
        
       }
     }).then((d) => {
-      //console.log('Registered')
+      console.log('Registered')
       res.redirect(303,'/')
       
     }).catch((g) => {
-      //console.log(g)
-      //console.log('Error')
+      console.log(g)
+      console.log('Error')
      var e=new Error('Not Registered')
       next(e)
     })
@@ -427,7 +437,7 @@ app.get('/bank', redirectLogin, (req, res, next) => {
   
 })
 
-app.get('/api/:name', (req, res, next) => {
+app.get('/api/:name',redirectLogin, (req, res, next) => {
   if (req.session.admin == req.session.chess) {
     db.findOne({ 'Name': req.params.name })
       .then((d) => {
@@ -446,6 +456,34 @@ app.get('/api/:name', (req, res, next) => {
     res.sendStatus(403)
   }
 })
+app.get('/profile', redirectLogin, (req, res, next) => {
+        res.render('profile',{usr:req.session.chess})
+    
+})
+app.post('/profile_update', redirectLogin, (req, res, next) => {
+  var temp = req.body;
+  db.findOne({ 'Email': req.session.prj })
+    .then((d) => {
+      d.Profile.Name = temp.name
+      d.Profile.Description = temp.des
+      d.Profile.Exp=temp.exp
+      d.save();
+      res.redirect(303,'/show')
+    }).catch((e) => {
+      console.log(e);
+      
+    })
+})
+app.get('/show', redirectLogin, (req, res, next) => {
+  db.findOne({ 'Email': req.session.prj })
+    .then((d) => {
+      var T = d.Profile;
+      res.render('Show',{Info:T})
+    }).catch((e) => {
+    console.log(e)
+  })
+})
+
 
 
 //Logout

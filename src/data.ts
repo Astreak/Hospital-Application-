@@ -9,6 +9,23 @@ var Store = new Schema({
         require: true,
         unique: false
     },
+    Profile: {
+        Name: {
+            type: String,
+            require: true,
+            unique:false,
+        },
+        Description: {
+            type: String,
+            require: true,
+            unique:false,
+        },
+        Exp: {
+            type: String,
+            require: true,
+            unique:false
+        }
+    },
     hosstatus: {
         type: Boolean,
         require: true,
@@ -99,5 +116,5 @@ var Store = new Schema({
         timestamp:true
     })
 
-var Store = mongoose.model('lon', Store)
+var Store = mongoose.model('dfs', Store)
 module.exports = Store;

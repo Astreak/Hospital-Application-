@@ -1,0 +1,17 @@
+<h1><center>Update you profile Mr. {{usr}}</center></h1><br>
+<form action='/profile_update' method="POST">
+        <div class='form-group col-sm-5 center_div'>
+                <label><h2 style='color:dodgerblue'>Name</h2></label>
+                <input type='text' class='form-control' name='name' value={{usr}}>
+        </div>
+        <div class='form-group col-sm-5 center_div'>
+                <label><h2 style='color:dodgerblue'>Description</h2></label>
+                <input type='text' class='form-control' name='des'>
+        </div>
+        <div class='form-group col-sm-5 center_div'>
+                <label><h2 style='color:dodgerblue'>Experience</h2></label>
+                <input type='text' class='form-control' name='exp'><br>
+        </div>
+        <button class='btn btn-success'>Update</button>
+        
+</form>
