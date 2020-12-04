@@ -3,7 +3,7 @@ body{
     
     text-align:center;
     display: inline;
-    background-image: url('../images/Harry.jpg');
+    
     -webkit-background-size: cover;
 }
 

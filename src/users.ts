@@ -396,7 +396,7 @@ app.get('/hide/:name', (req, res, next) => {
     .then((d) => {
       let r = d.Tasks.length;
       for (let i = 0; i < r; i++){
-        if (d.Tasks[i].user == n && d.Tasks[i].status == false, d.Tasks[i].hide == false) {
+        if (d.Tasks[i].user == n && d.Tasks[i].status == false && d.Tasks[i].hide == false) {
           d.Tasks[i].hide = true
           d.save()
         }

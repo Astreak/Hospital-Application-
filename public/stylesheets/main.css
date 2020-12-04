@@ -1,5 +1,5 @@
 body {
-    background-image: url('../images/HOPster.jpg');
+
     -webkit-background-size: cover;
     text-align:center;
     display: inline;
@@ -9,16 +9,16 @@ h1{
     font-size:36px;
     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     position:relative;
-    top:310px;
+    top:240px;
     font-weight: 700px;
-    color:Azure
+    color:darkslategray;
 }
 .logged{
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    font-size: 14px;
-    color:azure;
+    font-size: 21px;
+    color:darkslategray;
     position:relative;
-    bottom:13px;
+    top:10px;
     right:12px;
     
 }
@@ -30,8 +30,9 @@ img{
 }
 .navbar-brand{
     font-size:16px;
+    
 }
 .head{
-    color:beige;
+    color:dodgerblue;
     font-style: italic;
 }
