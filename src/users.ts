@@ -17,13 +17,13 @@ var client = new Client({
   port:5432
 })
 client.connect()
-  // .then(() => console.log('psql connected'))
-  // .catch((e)=>console.log(e))
+  .then(() => console.log('psql connected'))
+  .catch((e)=>console.log(e))
 
 //Connecting Database
 var connect=mongoose.connect(process.env.CONNEC, { useUnifiedTopology: true, useNewUrlParser: true })
 connect .then(() => {
-  
+    console.log('Database Connected')
 }).catch(() => {
     
 })
