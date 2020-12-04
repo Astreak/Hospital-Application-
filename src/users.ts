@@ -17,15 +17,15 @@ var client = new Client({
   port:5432
 })
 client.connect()
-  .then(() => console.log('psql connected'))
-  .catch((e)=>console.log(e))
+  // .then(() => console.log('psql connected'))
+  // .catch((e)=>console.log(e))
 
 //Connecting Database
 var connect=mongoose.connect(process.env.CONNEC, { useUnifiedTopology: true, useNewUrlParser: true })
 connect .then(() => {
-  console.log('Database Connected')
+  
 }).catch(() => {
-    console.log('Check Database Connection')
+    
 })
 
 //Sessions
@@ -128,7 +128,7 @@ var redirectTask = (req, res, next) => {
       else
         res.redirect(303,'/')
     }).catch((e) => {
-      console.log(e)
+      //console.log(e)
       res.redirect('/')
     })
 }
@@ -141,13 +141,13 @@ var redirectTreat = (req, res, next) => {
       else
         res.sendStatus(500)
     }).catch((e) => {
-      console.log(e)
+      //console.log(e)
       next(e)
   })
 }
 app.get('/', redirectLogin, function (req, res) {
-  console.log(process.env.NAME)
-  console.log(req.session)
+  //console.log(process.env.NAME)
+  //console.log(req.session)
    res.render('layouts/main',{layout:false,user:req.session.chess,status:req.session.status});
 });
 
@@ -163,7 +163,7 @@ app.post('/login_post', (req, res, next) => {
       if (d) {
         req.session.prj = d.Email
         req.session.chess = req.body.username
-        console.log('Here')
+        //console.log('Here')
         req.session.status=d.hosstatus
         res.redirect(303, '/')
 
@@ -183,12 +183,12 @@ app.get('/register', (req, res) => {
  res.render('register')
 })
 app.get('/register/api', (req, res) => {
-  console.log(req.session.chess)
+  //console.log(req.session.chess)
   res.send("<h1> Stuff </h1>")
 })
 app.post('/register_post', (req, res, next) => {
   var temp = req.body.hos ? true : false
-  console.log(temp)
+  //console.log(temp)
    db.findOne({ 'Email': req.body.email })
     .then((d) => {
       if (d != null) {
@@ -229,12 +229,12 @@ app.post('/register_post', (req, res, next) => {
        
       }
     }).then((d) => {
-      console.log('Registered')
+      //console.log('Registered')
       res.redirect(303,'/')
       
     }).catch((g) => {
-      console.log(g)
-      console.log('Error')
+      //console.log(g)
+      //console.log('Error')
      var e=new Error('Not Registered')
       next(e)
     })
@@ -270,10 +270,10 @@ app.post('/treat_post', (req, res, next) => {
           })
           D.save()
       })
-      console.log('Successfully recorded')
+      //console.log('Successfully recorded')
       res.redirect(303,'/treatment')
     }).catch((e) => {
-      console.log(e)
+      //console.log(e)
       next(e)
   })
 })
@@ -293,7 +293,7 @@ app.get('/finish/:name', (req, res, next) => {
       let k = d.Tasks.length
       for (let i = 0; i < k; i++){
         if (d.Tasks[i].user == req.params.name && d.Tasks[i].status == true && d.Tasks[i].active==true) {
-          console.log(d.Tasks[i].status)
+          //console.log(d.Tasks[i].status)
           d.Tasks[i].status = false
           d.Tasks[i].active=false
           d.save()
@@ -308,7 +308,7 @@ app.get('/finish/:name', (req, res, next) => {
       
       db.findOne({ 'Name': req.params.name })
         .then((d) => {
-          console.log('ok')
+          //console.log('ok')
           if (d.Bank.Amount >= 60) {
             d.Bank.Amount -= temp
             d.Bank.Transaction.push({ user: req.session.chess, credit: `-${temp}`,stat:false})
@@ -321,7 +321,7 @@ app.get('/finish/:name', (req, res, next) => {
           next(e)
       })
     }).catch((e) => {
-      console.log(e)
+      //console.log(e)
       next(e)
   })
 })
@@ -332,7 +332,7 @@ app.get('/tasks',redirectTask, (req, res, next) => {
     .then((d) => {
       res.render('Task',{Task:d.Tasks})
     }).catch((e) => {
-      console.log(e)
+      //console.log(e)
       next(e)
   })
 })
@@ -345,21 +345,21 @@ app.get('/assign/:name', redirectLogin, (req, res, next) => {
 
 })
 app.get('/assign', (req, res, next) => {
-    console.log(req.session.status)
+    //console.log(req.session.status)
     res.render('Ann', { usr: req.session.status})
 })
 app.post('/assign_post/:name', redirectLogin, (req, res, next) => {
-  console.log(req.params.name)
+  //console.log(req.params.name)
   let v = parseInt(req.body.cost)
-  console.log(v)
+  //console.log(v)
   db.findOne({ 'Email': req.session.prj })
     .then((d) => {
       var g = d.Tasks.length;
-      console.log(g)
+      //console.log(g)
       for (let i = 0; i < g; i++) {
         if (req.params.name == d.Tasks[i].user && d.Tasks[i].active == false) {
           d.Tasks[i].active = true
-          console.log('Inside loop')
+          //console.log('Inside loop')
           d.Tasks[i].Cost = v
           d.save()
           break;
@@ -367,7 +367,7 @@ app.post('/assign_post/:name', redirectLogin, (req, res, next) => {
       }
       res.redirect(303, '/tasks')
     }).catch((e) => {
-      console.log(e)
+      //console.log(e)
       next(e)
     })
 })
@@ -385,7 +385,7 @@ app.get('/del/:name', redirectLogin, (req, res, next) => {
       }
       res.redirect(303,'/tasks')
     }).catch((e) => {
-      console.log(e)
+      //console.log(e)
       next(e)
   })
 
@@ -403,7 +403,7 @@ app.get('/hide/:name', (req, res, next) => {
       }
       res.redirect(303,'/tasks')
     }).catch((e) => {
-      console.log(e)
+      //console.log(e)
       res.redirect('error')
   })
 })
@@ -415,13 +415,13 @@ app.get('/bank', redirectLogin, (req, res, next) => {
   let g
   db.findOne({ 'Email': req.session.prj })
     .then((d) => {
-      console.log('ok')
+      //console.log('ok')
       g = d.Bank.Amount;
       g = g.toFixed(10).toString()
       
       res.render('Bank', { am: g,T:d.Bank.Transaction })
     }).catch((e) => {
-      console.log(e)
+      //console.log(e)
       next(e)
     })
   
@@ -438,7 +438,7 @@ app.get('/api/:name', (req, res, next) => {
         res.json(d)
 
       }).catch((e) => {
-        console.log(e)
+        //console.log(e)
         next(e)
       })
   }
