@@ -2,7 +2,14 @@ var express = require('express');
 var db=require('./data.ts')
 var app = express();
 
-app.get('/msg', (req, res, next) => {
+
+var redirectLogin = (req, res, next) => {
+    if (req.session.prj)
+        next()
+    else
+        res.redirect(303, '/login')
+}
+app.get('/msg', redirectLogin, (req, res, next) => {
     res.render('Msg')
 })
 app.post('/msg_post', (req, res, next) => {
@@ -33,7 +40,7 @@ app.post('/msg_post', (req, res, next) => {
             next(E)
     })
 })
-app.get('/rec', (req, res, next) => {
+app.get('/rec',redirectLogin, (req, res, next) => {
     db.findOne({ 'Email': req.session.prj })
         .then((d) => {
             res.render('Rec',{T:d.Rec,usr:req.session.chess})
