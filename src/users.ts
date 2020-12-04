@@ -8,20 +8,20 @@ const auth=require('./Auth')
 const bcrypt = require('bcryptjs')
 const fileStore=require('session-file-store')(session)
 var app = express();
-const { Client } = require('pg');
-var client = new Client({
-  user: 'postgres',
-  password: process.env.past,
-  database: 'random',
-  host: 'localhost',
-  port:5432
-})
-client.connect()
-  .then(() => console.log('psql connected'))
-  .catch((e)=>console.log(e))
+// const { Client } = require('pg');
+// var client = new Client({
+//   user: 'postgres',
+//   password: process.env.past,
+//   database: 'random',
+//   host: 'localhost',
+//   port:5432
+// })
+// client.connect()
+//   .then(() => console.log('psql connected'))
+//   .catch((e)=>console.log(e))
 
 //Connecting Database
-var connect = mongoose.connect("mongodb+srv://prj:giveusatank@hospital-app.hafw4.mongodb.net/hospital?retryWrites=true&w=majority", { useUnifiedTopology: true, useNewUrlParser: true })
+var connect=mongoose.connect(process.env.CONNEC, { useUnifiedTopology: true, useNewUrlParser: true })
 connect .then(() => {
     console.log('Database Connected')
 }).catch(() => {
