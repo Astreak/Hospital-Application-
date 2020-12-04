@@ -5,6 +5,10 @@
   "scripts": {
     "start": "node ./bin/www.ts"
   },
+  "engines": {
+        "node":"^14.15.0",
+        "npm":"^6.14.8"
+  },
   "dependencies": {
     "@types/node": "^14.14.6",
     "bcryptjs": "^2.4.3",
