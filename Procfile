@@ -1,1 +1,1 @@
-web: node ./bin/www.ts
+web: nodemon ./bin/www.js
