@@ -38,7 +38,7 @@ var Store = new Schema({
         unique: true
     },
     Password: {
-        type: String,
+        type:String,
         require: true,
         unique: false
     },
@@ -116,5 +116,5 @@ var Store = new Schema({
         timestamp:true
     })
 
-var Store = mongoose.model('dfs', Store)
+var Store = mongoose.model('unicorn', Store)
 module.exports = Store;

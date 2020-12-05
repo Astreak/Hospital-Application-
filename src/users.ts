@@ -7,7 +7,9 @@ const app2 = require('./index.ts')
 const auth=require('./Auth')
 const bcrypt = require('bcryptjs')
 const fileStore=require('session-file-store')(session)
+const byc = require('bcrypt');
 var app = express();
+
 // const { Client } = require('pg');
 // var client = new Client({
 //   user: 'postgres',
@@ -101,8 +103,20 @@ app.use(session({
     epehmeral: true
   }
 }));
-
-
+app.use(session({
+  name: 'profile',
+  secret: process.env.PASS,
+  saveUnInitialized: false,
+  resave: false,
+  cookie: {
+    secret: false,
+    maxAge: 600000,
+    path: '/',
+    httpOnly: false,
+    priority: 'High',
+    epehmeral: true
+  }
+}));
 //Middlewares
 app.use(auth);
 app.use(app2);
@@ -156,17 +170,22 @@ app.get('/', redirectLogin, function (req, res) {
 app.get('/login',redirectHome, (req, res) => {
   res.render('login')
 })
-app.post('/login_post', (req, res, next) => {
-  let temp
-  db.findOne({ 'Name': req.body.username, 'Password': req.body.password })
+app.post('/login_post', async(req, res, next) => {
+  
+  db.findOne({ 'Email': req.body.Email})
     .then((d) => {
+      
       if (d) {
-        req.session.prj = d.Email
-        req.session.chess = req.body.username
-        //console.log('Here')
-        req.session.status=d.hosstatus
-        res.redirect(303, '/')
-
+        if (byc.compareSync(req.body.password, d.Password)) {
+          req.session.prj = d.Email
+          req.session.chess = d.Name
+          //console.log('Here')
+          req.session.status = d.hosstatus
+          res.redirect(303, '/')
+        }
+        else {
+          res.redirect(303,'/login')
+        }
         
       }
       else {
@@ -186,70 +205,108 @@ app.get('/register/api', (req, res) => {
   //console.log(req.session.chess)
   res.send("<h1> Stuff </h1>")
 })
-app.post('/register_post', (req, res, next) => {
+app.post('/register_post',async(req, res, next) => {
   var temp = req.body.hos ? true : false
+  var hashed=await byc.hash(req.body.password,10)
   //console.log(temp)
-   db.findOne({ 'Email': req.body.email })
-    .then((d) => {
-      if (d != null) {
-        res.redirect(303, "/login")
+  
+    db.findOne({ 'Email': req.body.email })
+      .then((d) => {
+        if (d != null) {
+          res.redirect(303, "/login")
         
-      }
-      else {
-        if (temp) {
-          return db.create({
-            Name: req.body.username,
-            Profile: {
-              Name: req.body.username,
-              Description: '',
-              Exp:''
-            },
-            hosstatus: temp,
-            Tasks: [],
-            Email: req.body.email,
-            Password: req.body.password,
-            Sent: [],
-            Rec:[],
-            Bank: {
-              Amount: req.body.Amount,
-              Transaction: []
-            }
-          })
-          
         }
         else {
-          return db.create({
-            Name: req.body.username,
-            Profile: {
+          if (temp) {
+            return db.create({
               Name: req.body.username,
-              Description: '',
-              Exp: ''
-            },
-            hosstatus: temp,
-            Email: req.body.email,
-            Password: req.body.password,
-            Sent: [],
-            Rec:[],
-            Bank: {
-              Amount: req.body.Amount,
-              Transaction: []
-            }
-          })
-        }
+              Profile: {
+                Name: req.body.username,
+                Description: '',
+                Exp: ''
+              },
+              hosstatus: temp,
+              Tasks: [],
+              Email: req.body.email,
+              Password:hashed,
+              Sent: [],
+              Rec: [],
+              Bank: {
+                Amount: req.body.Amount,
+                Transaction: []
+              }
+            })
+          
+          }
+          else {
+            return db.create({
+              Name: req.body.username,
+              Profile: {
+                Name: req.body.username,
+                Description: '',
+                Exp: ''
+              },
+              hosstatus: temp,
+              Email: req.body.email,
+              Password: hashed,
+              Sent: [],
+              Rec: [],
+              Bank: {
+                Amount: req.body.Amount,
+                Transaction: []
+              }
+            })
+          }
        
-      }
-    }).then((d) => {
-      console.log('Registered')
-      res.redirect(303,'/')
+        }
+      }).then((d) => {
+        console.log('Registered')
+        res.redirect(303, '/')
       
-    }).catch((g) => {
-      console.log(g)
-      console.log('Error')
-     var e=new Error('Not Registered')
-      next(e)
-    })
+      }).catch((g) => {
+        console.log(g)
+        console.log('Error')
+        var e = new Error('Not Registered')
+        next(e)
+      })
+  
     
 })
+app.get('/search', async (req, res, next) => {
+  res.render('Search');
+})
+app.post('/search_name', async(req, res, next) => {
+  var user = req.body.search
+  console.log(user)
+  var E = [];
+  db.find({ 'Name': user }, (err, u) => {
+    if (err) throw err;
+    res.render('Users',{U:u})
+  })
+    
+})
+app.get('/manage/:id', async (req, res, next) => {
+  db.findOne({ '_id': req.params.id })
+    .then((d) => {
+      req.session.profile = d.Profile
+      res.redirect(303,'/manage')
+    }).catch((e) => {
+      console.log(e)
+      next(e)
+  })
+    
+})
+app.get('/manage', async (req, res, next )=>{
+    res.render('Manage',{O:req.session.profile})
+})
+
+app.get('/doc', async (req, res, next) => {
+  db.find({ 'hosstatus': true }, (e, u) => {
+    if (e) throw e;
+    res.render('Users',{U:u})
+    })
+})
+
 
 //Medic Stuff
 app.get('/treatment',[redirectLogin,redirectTreat], (req, res, next) => {

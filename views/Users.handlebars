@@ -1,1 +1,19 @@
-<h1>Users page</h1>
+<ul class='list-group list-group-flush'>
+        {{#each U}}
+        <li class='list-group-item'>
+                
+                {{#if this.hosstatus}}
+                        <p style="color:darkslategrey;font-size:larger;font-weight:bold">(Dr.){{this.Name}}</p>
+                        
+                
+                {{else}}
+                        <p class="general" style='color:rgb(255, 0, 157);font-size:larger;font-weight:700'>{{this.Name}}</p>
+                        
+
+                {{/if}}
+                <a href='/manage/{{this._id}}'><button class='btn btn-info btn-lg'>Get to the Profile</button></a>
+
+
+        </li>
+        {{/each}}
+</ul>
