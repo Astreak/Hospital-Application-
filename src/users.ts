@@ -531,6 +531,9 @@ app.post('/profile_update', redirectLogin, (req, res, next) => {
       
     })
 })
+app.get('/nearest', redirectLogin, (req, res, next) => {
+    res.render('Maps',{api:process.env.AUTH_KEY})
+})
 app.get('/show', redirectLogin, (req, res, next) => {
   db.findOne({ 'Email': req.session.prj })
     .then((d) => {
