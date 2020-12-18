@@ -1,0 +1,11 @@
+<h1> Medical Data Of Active Patients </h1>
+<br><hr>
+{{#each P}}
+        <h2 style="color:darkslategrey;font-weight:600;font-size:18px">
+                {{this.user}}
+        </h2><br>
+        <h2 style="color:dodgerblue;font-weight:600;font-size:18px">
+                {{this.task}}
+        </h2>
+        <a href='/dataMedical/{{this.user}}'><button class='btn btn-primary btn-lg'>View Medical data</button></a><hr>
+{{/each}}

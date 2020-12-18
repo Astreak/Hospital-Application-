@@ -194,14 +194,33 @@ app.post('/login_post', async(req, res, next) => {
   })
     
 })
+// Seeing medical  data
+
+app.get('/medical',async(req,res,next)=>{
+    db.findOne({'Email':req.session.prj})
+    .then((d)=>{
+        if(d.hosstatus){
+          var temp=d.Tasks.filter((i)=>{
+              return (i.active && i.status)
+          })
+          res.render('Medical',{P:temp})
+        }
+        else
+            res.sendStatus(500)
+    }).catch((e)=>{
+      console.log(e)
+      next(e)
+    })
+})
+
 
 
 
 //Register Logic
-app.get('/register', (req, res) => {
+app.get('/register', (req, res,next) => {
  res.render('register')
 })
-app.get('/register/api', (req, res) => {
+app.get('/register/api', (req, res,next) => {
   //console.log(req.session.chess)
   res.send("<h1> Stuff </h1>")
 })
