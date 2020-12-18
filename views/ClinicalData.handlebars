@@ -1,0 +1,29 @@
+<h1> Enter the clinical Data Mr.{{usr}} for Doctors to check</h1><br><br>
+<form action='/clinical_update' method="POST">
+        <div class='form-group col-sm-5 center_div'>
+                <label>
+                        <h2 style='color:dodgerblue'>BMR</h2>
+                </label>
+                <input type='text' class='form-control' name='bmr'>
+        </div>
+        <div class='form-group col-sm-5 center_div'>
+                <label>
+                        <h2 style='color:dodgerblue'>Heart Pulse Rate</h2>
+                </label>
+                <input type='number' class='form-control' name='hpr'>
+        </div>
+        <div class='form-group col-sm-5 center_div'>
+                <label>
+                        <h2 style='color:dodgerblue'>Severity</h2>
+                </label>
+                <input type='number' class='form-control' name='sev'><br>
+        </div>
+        <div class='form-group col-sm-5 center_div'>
+                <label>
+                        <h2 style='color:dodgerblue'>Overall Feeling</h2>
+                </label>
+                <textarea type='text' class='form-control' name='overall' row="200" col="200"></textarea><br>
+        </div>
+        <button class='btn btn-success'>Update Health Data</button>
+
+</form>

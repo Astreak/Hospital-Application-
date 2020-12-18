@@ -94,10 +94,21 @@ var Store = new Schema({
         require: false,
         unique: false
     },
+    Health: {
+        type:{
+            BMR:String,
+            HeartPulse:Number,
+            Severity:Number,
+            OverAll:String
+        },
+        require:false,
+        unique:false
+
+    },
     Bank: {
         Amount: {
             type: Number,
-            require: true,
+            required: true,
             unique:false
         },
         Transaction: {
@@ -106,7 +117,7 @@ var Store = new Schema({
                 credit: String,
                 stat:Boolean
             }],
-            require: false,
+            required: false,
             unique: false
         }
         
@@ -116,5 +127,5 @@ var Store = new Schema({
         timestamp:true
     })
 
-var Store = mongoose.model('unicorn', Store)
+var Store = mongoose.model('Boy', Store)
 module.exports = Store;

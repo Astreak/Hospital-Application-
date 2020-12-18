@@ -38,7 +38,7 @@ app.use(session({
   resave: false,
   cookie: {
     secret: false,
-    maxAge: 6000000,
+    maxAge: 6000000000,
     path: '/',
     httpOnly: true,
     priority: 'High',
@@ -54,7 +54,7 @@ app.use(session({
   resave: false,
   cookie: {
     secret: false,
-    maxAge: 6000000,
+    maxAge: 6000000000,
     path: '/',
     httpOnly: true,
     priority: 'High',
@@ -68,7 +68,7 @@ app.use(session({
   resave: false,
   cookie: {
     secret: false,
-    maxAge: 600000,
+    maxAge: 600000000,
     path: '/',
     httpOnly: false,
     priority: 'High',
@@ -82,7 +82,7 @@ app.use(session({
   resave: false,
   cookie: {
     secret: false,
-    maxAge: 600000,
+    maxAge: 600000000,
     path: '/',
     httpOnly: false,
     priority: 'High',
@@ -96,7 +96,7 @@ app.use(session({
   resave: false,
   cookie: {
     secret: false,
-    maxAge: 600000,
+    maxAge: 600000000,
     path: '/',
     httpOnly: false,
     priority: 'High',
@@ -110,7 +110,7 @@ app.use(session({
   resave: false,
   cookie: {
     secret: false,
-    maxAge: 600000,
+    maxAge: 600000000,
     path: '/',
     httpOnly: false,
     priority: 'High',
@@ -226,6 +226,7 @@ app.post('/register_post',async(req, res, next) => {
                 Exp: ''
               },
               hosstatus: temp,
+              
               Tasks: [],
               Email: req.body.email,
               Password:hashed,
@@ -247,6 +248,12 @@ app.post('/register_post',async(req, res, next) => {
                 Exp: ''
               },
               hosstatus: temp,
+              Health:{
+                BMR:'',
+                HeartPulse:NaN,
+                Severity:NaN,
+                OverAll:''
+              },
               Email: req.body.email,
               Password: hashed,
               Sent: [],
@@ -362,7 +369,7 @@ app.get('/finish/:name', (req, res, next) => {
         if (d.Tasks[i].user == req.params.name && d.Tasks[i].status == true && d.Tasks[i].active==true) {
           //console.log(d.Tasks[i].status)
           d.Tasks[i].status = false
-          d.Tasks[i].active=false
+          d.Tasks[i].active = false
           d.save()
           temp = d.Tasks[i].Cost
           d.Bank.Amount += temp

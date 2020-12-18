@@ -7,17 +7,19 @@
             {{#if this.status}}
                 {{#if this.active}}
                     <a href="/pat/{{this.user}}"><p style="color:rgb(255, 255, 1);font-weight:600;font-size:18px">{{this.user}}</p></a>
-                    
+                    <p style="color:dodgerblue;font-weight:700;font-size:14px;">{{this.task}}</p><br>
                 {{else}}
                     
                         <p style="color:red;font-weight:600;font-size:18px">{{this.user}}</p>
+                        <p style="color:dodgerblue;font-weight:800;font-size:14px;">{{this.task}}</p><br>
                     <a class="btn btn-primary" href='/assign/{{this.user}}'>Set Price</a>
                     <a class="btn btn-danger" href='/del/{{this.user}}'>Reject</a>
                 {{/if}}
 
-                <p style="color:rgb(255, 0, 21);font-weight:500">{{this.Cost}}</p>
+                <p style="color:rgb(255, 0, 21);font-weight:500;font-size:19px;">{{this.Cost}}</p>
             {{else}}
                 <p style="color:rgb(0, 255, 0);font-weight:600;font-size:18px">{{this.user}}</p>
+                
                 <a href="/hide/{{this.user}}" class="btn btn-primary"> Hide Task</a>
             {{/if}}
         {{/if}}   
