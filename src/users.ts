@@ -23,7 +23,7 @@ var app = express();
 //   .catch((e)=>console.log(e))
 
 //Connecting Database
-var connect = mongoose.connect(process.env.CONNEC, { useUnifiedTopology: true, useNewUrlParser: true })
+var connect = mongoose.connect("mongodb+srv://prj:giveusatank@hospital-app.hafw4.mongodb.net/hospital?retryWrites=true&w=majority", { useUnifiedTopology: true, useNewUrlParser: true })
 connect .then(() => {
     console.log('Database Connected')
 }).catch(() => {
@@ -558,7 +558,7 @@ app.post('/profile_update', redirectLogin, (req, res, next) => {
     })
 })
 app.get('/nearest', redirectLogin, (req, res, next) => {
-    res.render('Maps',{api:process.env.AUTH_KEY})
+    res.render('Maps',{api:"AIzaSyBC7UAvcQzJ3_dyPgBkep0W5mFAqDAp2Mg"})
 })
 app.get('/show', redirectLogin, (req, res, next) => {
   db.findOne({ 'Email': req.session.prj })
