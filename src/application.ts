@@ -1,7 +1,7 @@
 const express = require('express');
 const db = require('./data.ts');
 const session = require('express-session');
-
+const apis = require('./apis.ts')
 var app = express();
 app.use(session({
         name: 'Hond',
@@ -17,7 +17,7 @@ app.use(session({
                 ephemeral: true
         }
 }));
-
+app.use(apis);
 //Patient Logic
 
 app.get('/pat/:name', (req, res, next) => {
