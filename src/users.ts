@@ -23,7 +23,7 @@ var app = express();
 //   .catch((e)=>console.log(e))
 
 //Connecting Database
-var connect = mongoose.connect("mongodb+srv://prj:giveusatank@hospital-app.hafw4.mongodb.net/hospital?retryWrites=true&w=majority", { useUnifiedTopology: true, useNewUrlParser: true })
+var connect = mongoose.connect(process.env.CONNEC, { useUnifiedTopology: true, useNewUrlParser: true })
 connect .then(() => {
     console.log('Database Connected')
 }).catch(() => {
@@ -248,7 +248,8 @@ app.post('/register_post',async(req, res, next) => {
                 Exp: ''
               },
               hosstatus: temp,
-              
+              Follower: [],
+              Followed:[],
               Tasks: [],
               Email: req.body.email,
               Password:hashed,

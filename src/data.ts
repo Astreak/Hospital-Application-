@@ -14,6 +14,20 @@ var Store = new Schema({
         require: true,
         unique: false
     },
+    Followers: [{
+        Email: {
+            type: String,
+            require: false,
+            unique:false
+        }
+    }],
+    Followed: [{
+        Email: {
+            type: String,
+            require: false,
+            unique:false
+        }
+    }],
     Profile: {
         Name: {
             type: String,
@@ -132,5 +146,5 @@ var Store = new Schema({
         timestamp:true
     })
 
-var Store = mongoose.model('Hornywhore', Store)
+var Store = mongoose.model('Onlywhore2', Store)
 module.exports = Store;
