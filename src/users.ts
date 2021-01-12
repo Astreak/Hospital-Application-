@@ -23,7 +23,7 @@ var app = express();
 //   .catch((e)=>console.log(e))
 
 //Connecting Database
-var connect = mongoose.connect("mongodb+srv://prj:giveusatank@hospital-app.hafw4.mongodb.net/hospital?retryWrites=true&w=majority", { useUnifiedTopology: true, useNewUrlParser: true })
+var connect = mongoose.connect(process.env.CONNEC, { useUnifiedTopology: true, useNewUrlParser: true })
 connect .then(() => {
     console.log('Database Connected')
 }).catch(() => {
@@ -226,7 +226,9 @@ app.get('/register/api', (req, res,next) => {
 })
 app.post('/register_post',async(req, res, next) => {
   var temp = req.body.hos ? true : false
-  var hashed=await byc.hash(req.body.password,10)
+  var hashed = await byc.hash(req.body.password, 10);
+  var g = req.body.username + req.body.email + req.body.password + `Fuckyoumotherfuckerarsefuckingwanker${req.body.username}and${req.body.email}`
+  var api_key = await byc.hash(g, 12);
   //console.log(temp)
   
     db.findOne({ 'Email': req.body.email })
@@ -238,6 +240,7 @@ app.post('/register_post',async(req, res, next) => {
         else {
           if (temp) {
             return db.create({
+              APIKEY: api_key,
               Name: req.body.username,
               Profile: {
                 Name: req.body.username,
@@ -260,6 +263,7 @@ app.post('/register_post',async(req, res, next) => {
           }
           else {
             return db.create({
+              APIKEY: api_key,
               Name: req.body.username,
               Profile: {
                 Name: req.body.username,
@@ -540,7 +544,11 @@ app.get('/api/:name',redirectLogin, (req, res, next) => {
   }
 })
 app.get('/profile', redirectLogin, (req, res, next) => {
-        res.render('profile',{usr:req.session.chess})
+  db.findOne({ 'Email': req.session.prj })
+    .then((d) => {
+      res.render('profile', { usr: d })
+  })
+        
     
 })
 app.post('/profile_update', redirectLogin, (req, res, next) => {
@@ -564,7 +572,7 @@ app.get('/show', redirectLogin, (req, res, next) => {
   db.findOne({ 'Email': req.session.prj })
     .then((d) => {
       var T = d.Profile;
-      res.render('Show',{Info:T})
+      res.render('Show',{Info:T,usr:d})
     }).catch((e) => {
     console.log(e)
   })

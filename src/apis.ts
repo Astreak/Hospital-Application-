@@ -23,11 +23,31 @@ var loginR = (req, res, next) => {
         else
                 next();
 }
-app.get("/api/users/:name", loginR,(req, res, next) => {
+app.get("/api/users/:name",(req, res, next) => {
         var name = req.params.name;
-        db.findOne({ "Name": name })
-                .then((d) => {
-                        res.json(d);
-        })
+        var t = req.query.api_key;
+        if (t) {
+                db.findOne({ "APIKEY": t })
+                        .then((d) => {
+                                if (d != null) {
+                                        var temp=d.Name
+                                        db.findOne({ "Name": name })
+                                                .then((D) => {
+                                                        res.json({ 'Fetcher': temp, 'Data': D });
+                                                }).catch((e) => {
+                                                        console.log(e);
+                                                        res.sendStatus(404)
+                                                })
+                                }
+                                else {
+                                        res.json(403);
+                                }
+                        }).catch((e) => {
+                                console.log("ERROR FROM KEY" + e);
+                                res.sendStatus(404);
+                        })
+        }
+        else
+                res.sendStatus(403);
 })
 module.exports = app;

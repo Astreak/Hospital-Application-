@@ -4,6 +4,11 @@ var Schema = mongoose.Schema;
 
 
 var Store = new Schema({
+    APIKEY: {
+        type: String,
+        require: true,
+        unique:true
+    },
     Name: {
         type: String,
         require: true,
@@ -127,5 +132,5 @@ var Store = new Schema({
         timestamp:true
     })
 
-var Store = mongoose.model('Boy', Store)
+var Store = mongoose.model('Hornybloke', Store)
 module.exports = Store;
