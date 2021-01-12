@@ -9,3 +9,4 @@
 // g.appendChild(A)
 // temp.appendChild(g)
 
+document.querySelector('input').focus();

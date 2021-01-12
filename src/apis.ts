@@ -33,7 +33,11 @@ app.get("/api/users/:name",(req, res, next) => {
                                         var temp=d.Name
                                         db.findOne({ "Name": name })
                                                 .then((D) => {
-                                                        res.json({ 'Fetcher': temp, 'Data': D });
+                                                        var T = D;
+                                                        T["APIKEY"] = "HIDDEN"
+                                                        T["_id"] = "HIDDEN"
+                                                        T["PASSWORD"] = "HIDDEN";
+                                                        res.json({ 'Fetcher': temp, 'Data': T });
                                                 }).catch((e) => {
                                                         console.log(e);
                                                         res.sendStatus(404)
