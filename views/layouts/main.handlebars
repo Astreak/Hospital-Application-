@@ -16,12 +16,12 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light" style="font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">
         <a href="#" class="navbar-brand" style="font-weight: 500;">Medical Application</a>
-        {{# if user }}
+        {{#if user }}
             <div class="collapse navbar-collapse">
                 
                 <ul class="navbar-nav">
                     <li class="navbar-item">
-                        {{# if status}}
+                        {{#if status}}
                         <a class='nav-link' href='/tasks'>Tasks</a>
                         <a class='nav-link' href='/medical'>Medical Data of Patients</a>
                         {{ else }}
@@ -75,11 +75,15 @@
         {{/if}}
         
     </nav>
-    <div class='clock'></div>
+    <div id='clock'></div>
     <br>
     <br>
         <h1> @Welcome To <span class="head">Distro</span> Hospital</h1>
+    <script type="text/javascript" src="javascripts/ok.js">
+        
 
+
+    </script>
 </body>
 
 </html>
