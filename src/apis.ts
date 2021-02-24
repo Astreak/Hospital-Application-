@@ -37,6 +37,8 @@ app.get("/api/users/:name",(req, res, next) => {
                                                         T["APIKEY"] = "HIDDEN"
                                                         T["_id"] = "HIDDEN"
                                                         T["Password"] = "HIDDEN";
+                                                        T["Sent"] = "HIDDEN",
+                                                        T["Rec"]="HIDDEN",
                                                         res.json({ 'Fetcher': temp, 'Data': T });
                                                 }).catch((e) => {
                                                         console.log(e);
