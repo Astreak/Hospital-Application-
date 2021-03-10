@@ -5,7 +5,7 @@ Starting off Creating a hospital application managing diffirent servers (medical
 ![alt-text](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTnSFlHSt-wzUie8oWz7e1TowYf0rEewPH4zw&usqp=CAU)
 ![alt-text](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRPORgrlUhEVsUIayFGnk8sjiIYVWfqJQvVxg&usqp=CAU)
 
-# Technologies and frameworks  Used:
+# Technologies and frameworks:
 - Node js
 - Handlebars templating engine
 - express js
