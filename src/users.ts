@@ -227,7 +227,7 @@ app.get('/register/api', (req, res,next) => {
 app.post('/register_post',async(req, res, next) => {
   var temp = req.body.hos ? true : false
   var hashed = await byc.hash(req.body.password, 10);
-  var g = req.body.username + req.body.email + req.body.password + `Fuckyoumotherfuckerarsefuckingwanker${req.body.username}and${req.body.email}`
+  var g = req.body.username + req.body.email + req.body.password + `${process.env.salt} ${req.body.username}and${req.body.email}`
   var api_key = await byc.hash(g, 12);
   //console.log(temp)
   
