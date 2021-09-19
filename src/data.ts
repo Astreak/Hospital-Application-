@@ -146,5 +146,5 @@ var Store = new Schema({
         timestamp:true
     })
 
-var Store = mongoose.model('Onlywhore2', Store)
+var Store = mongoose.model('NewThing', Store)
 module.exports = Store;
