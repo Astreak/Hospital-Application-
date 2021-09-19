@@ -567,7 +567,7 @@ app.post('/profile_update', redirectLogin, (req, res, next) => {
     })
 })
 app.get('/nearest', redirectLogin, (req, res, next) => {
-    res.render('Maps',{api:"AIzaSyBC7UAvcQzJ3_dyPgBkep0W5mFAqDAp2Mg"})
+    res.render('Maps',{api:process.env.APIK})
 })
 app.get('/show', redirectLogin, (req, res, next) => {
   db.findOne({ 'Email': req.session.prj })
